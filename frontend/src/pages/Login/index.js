@@ -1,10 +1,28 @@
 //import '../Register/Register.css';
 import { useForm } from "react-hook-form";
 import {Link} from "react-router-dom"
+import {useState, useContext} from 'react'
+import {authContext} from '../../contexts/authContext'
 
 function Login() {
-    const { register: login, handleSubmit, formState: {errors} } = useForm({mode: "onBlur"});
-    const onSubmit = data => console.log(data);
+
+    const {loginUser} = useContext(authContext)
+    const { register: login, handleSubmit, formState: {errors} } 
+    = useForm({
+        mode: "onChange", 
+        defaultValues: {email: '',password: ''},
+        criteriaMode: "all",
+    });
+
+    const onSubmit = async data => {
+        try {
+            console.log(data)
+            const loginData = await loginUser(data.email, data.password)
+            console.log(loginData);
+        } catch (error) {
+            console.log(error)
+        }
+    };
 
     return (
         <div className="container">

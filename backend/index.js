@@ -13,10 +13,10 @@ app.use(bodyParser.json());
 
 app.use(cookieParser());
 
-app.use(cors());
-
 require("dotenv").config();
 require('./config/database')
+
+app.use(cors());
 
 app.use('/api/auth', authRouter);
 
