@@ -14,6 +14,13 @@ const userSchema = new Schema ({
     password: {
         type: String,
         require: true
+    },
+    verified: {
+        type: Boolean,
+        default: false
+    },
+    refreshToken: {
+        type: String
     }
 })
 

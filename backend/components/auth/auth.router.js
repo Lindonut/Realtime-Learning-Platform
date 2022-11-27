@@ -7,11 +7,15 @@ const router = express.Router();
 
 const authController = require("./auth.controller");
 
-// router.get("/", verifyToken, authController.checkLogged)
+router.get("/", verifyToken, authController.checkLogged)
 
 router.post("/register", authController.register);
 
 router.post("/login", authController.login);
+
+router.post("/logout", verifyToken, authController.logout);
+
+router.post("/refresh", authController.requestRefreshToken);
 
 
 module.exports = router;

@@ -15,7 +15,7 @@ const verifyToken = (req, res, next) => {
 		next()
 	} catch (error) {
 		console.log(error)
-		return res.status(403).json({ success: false, message: 'Invalid token.' })
+		return res.status(403).json({ success: false, message: "You're not authenticated." })
 	}
 }
 
