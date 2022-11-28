@@ -1,11 +1,12 @@
 //import '../Register/Register.css';
-import { useForm } from "react-hook-form";
-import {Link} from "react-router-dom"
+import { useForm } from "react-hook-form"
+import {Link, Navigate} from "react-router-dom"
 import {useState, useContext} from 'react'
+import { toast } from "react-toastify"
 import {authContext} from '../../contexts/authContext'
 
 function Login() {
-
+    const {authState: { isAuthenticated }} = useContext(authContext)
     const {loginUser} = useContext(authContext)
     const { register: login, handleSubmit, formState: {errors} } 
     = useForm({
@@ -16,13 +17,17 @@ function Login() {
 
     const onSubmit = async data => {
         try {
-            console.log(data)
             const loginData = await loginUser(data.email, data.password)
-            console.log(loginData);
+            if(loginData.success)
+                toast.success(loginData.message);
+            else  
+                toast.warning(loginData.message);
         } catch (error) {
-            console.log(error)
+            toast.error(error.message);
         }
     };
+
+    if (isAuthenticated) return <Navigate to='/' />
 
     return (
         <div className="container">
@@ -37,7 +42,7 @@ function Login() {
                 <p className="pWarning">{errors.password?.message}</p>
                 <div className="center">
                     <p className="pStyle">Not have an account?&nbsp;</p>
-                    <Link to="/register"> Register Here!</Link>
+                    <Link to="/register" className="linkDecoration"> Register Here!</Link>
                 </div>
                 <input type="submit" value="Login"/>
             </form>

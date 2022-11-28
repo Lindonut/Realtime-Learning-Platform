@@ -1,18 +1,26 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import Register from './pages/Register'
-import Login from './pages/Login'
+import Login from './pages/Login/index'
 import Home from './pages/Home'
 import Verify from './pages/Verify'
 import AuthContextProvider from './contexts/authContext'
 import Infomation from './components/Main/infomation/infomation'
 import Dashboard from './components/Main/dashboard/dashboard'
-import Infogroup from './components/Main/inforgroup/infogroup'
-import Description from './components/Main/inforgroup/description/description'
-import Member from './components/Main/inforgroup/member/member'
+import Infogroup from './components/Main/infogroup/infogroup'
+import Description from './components/Main/infogroup/description/description'
+import Member from './components/Main/infogroup/member/member'
 function App() {
   return (
     <AuthContextProvider>
       <Router>
+      <ToastContainer 
+        draggable="false"
+        position="top-right"
+        pauseOnHover="false"
+        autoClose= {5000}
+        />
         <Routes>
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />

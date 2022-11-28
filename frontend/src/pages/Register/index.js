@@ -1,26 +1,33 @@
 import './Register.css';
 import { useForm } from "react-hook-form";
-import {Link} from "react-router-dom"
-import {useContext} from 'react'
+import {Link, Navigate} from "react-router-dom"
+import {useContext, useState} from 'react'
 import {authContext} from '../../contexts/authContext'
+import { toast } from "react-toastify"
 
 function Register() {
     const {registerUser} = useContext(authContext)
+    const [success, setSuccess] = useState(false);
     const { register, handleSubmit, formState: {errors} } 
     = useForm({
         mode: "onChange", 
         defaultValues: {name: '',email: '',password: ''},
         criteriaMode: "all",
     });
-  const onSubmit = async data => {
-    try {
-        console.log(data)
-        const registerData = await registerUser(data.name, data.email, data.password)
-        console.log(registerData);
-    } catch (error) {
-        console.log(error)
-    }
-};
+    const onSubmit = async data => {
+        try {
+            const registerData = await registerUser(data.name, data.email, data.password)
+            setSuccess(true);
+            if(registerData.success)
+                toast.success(registerData.message);
+            else  
+                toast.warning(registerData.message);
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
+    if (success) return <Navigate to='/verify' />
 
   return (
       <div className="container">
@@ -39,7 +46,7 @@ function Register() {
             <p className="pWarning">{errors.password?.message}</p>
             <div className="center">
                 <p className="pStyle">Already have an account?&nbsp;</p>
-                <Link to="/login"> Login Here!</Link>
+                <Link to="/login" className="linkDecoration"> Login Here!</Link>
             </div>
             <input type="submit" value="Register"/>
         </form>

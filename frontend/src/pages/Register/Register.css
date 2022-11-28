@@ -9,7 +9,7 @@
     margin: auto;
   }
   .containerForm {
-    width: 70%;
+    width: 400px;
     border: 1px solid #dfdfdf;
     padding: 20px;
     border-radius: 5px;
@@ -39,14 +39,15 @@
     color: red;
   }
   .pStyle {
+    margin: 5% 1%;
     color: black;
   }
   
-  p {
-    display: inline;
-  }
-  
   a {
+    text-decoration: none;
+  }
+
+  .linkDecoration {
     text-decoration: none;
   }
   
@@ -74,8 +75,6 @@
     line-height: 2;
     text-align: left;
     display: block;
-    margin-bottom: 5px;
-    margin-top: 15px;
     color: #2E2EFF;
     font-size: 15px;
     font-weight: 500;
