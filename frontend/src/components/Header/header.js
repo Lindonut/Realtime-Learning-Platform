@@ -21,7 +21,7 @@ const Header = () => {
                             <Link to="/infomation" className='dropdowm-item'> My Info</Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item>
-                            <Link to="/infomation" className='dropdowm-item'> My Info</Link>
+                            <Link to="/infomation" className='dropdowm-item'> Log out</Link>
                         </NavDropdown.Item>
                     </NavDropdown>
                 </Navbar.Collapse>
