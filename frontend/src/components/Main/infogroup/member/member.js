@@ -1,15 +1,57 @@
 import '../../../../App.css'
 import Table from 'react-bootstrap/Table';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 const Member = () => {
+    const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [member, setMember] = useState([]);
+    // const [firstName, setFirstName] = useState('');
+    // const [lastName, setLastName] = useState('');
+    // const postData = () => {
+    //     axios.post(`https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData`, {
+    //         firstName,
+    //         lastName
+    //     }).then(() => {
+    //         navigate('/')
+    //         getAllData()
+    //         handleClose()
+    //     })
+    // }
+    const getAllData = () => {
+        axios.get('https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData')
+            .then(res => {
+                console.log("Getting From:  ", res.data)
+                setMember(res.data)
+            }
+            )
+            .catch(err => console.log(err))
+    }
+    useEffect(() => {
+        getAllData()
+    }, []);
+    const arr = member.map((member) => {
+        return (
+            <tr>
+                <td>{member.id}</td>
+                <td>{member.firstName}</td>
+                <td>{member.lastName}</td>
+                <td>@mdo</td>
+            </tr>
+
+        )
+    })
+
+
     return (
         <>
             <div className='header-member'>
@@ -31,23 +73,7 @@ const Member = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td colSpan={2}>Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                        {arr}
                     </tbody>
                 </Table>
             </div>
@@ -65,7 +91,7 @@ const Member = () => {
                         Create an invitation Link
                     </div>
                     <button> Click me!</button>
-                    
+
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
