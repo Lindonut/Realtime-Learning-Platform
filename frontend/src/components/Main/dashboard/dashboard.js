@@ -83,7 +83,16 @@ const Dashboard = () => {
                 <Modal.Header closeButton>
                     <Modal.Title>Create a new Group</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Input your infomation here!!!</Modal.Body>
+                <Modal.Body>
+                    <div>
+                        Input your Group Name
+                    </div>
+                    <input type="text"></input>
+                    <div>
+                        Input your Group Description
+                    </div>
+                    <input type="text"></input>
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Cancel

@@ -21,42 +21,52 @@ const Member = () => {
                 </span>
             </div>
             <div className='table-member'>
-            <Table striped bordered hover size="sm" >
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Member</th>
-                        <th>Role</th>
-                        <th>Option</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td colSpan={2}>Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
-                </tbody>
-            </Table>
+                <Table striped bordered hover size="sm" >
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Member</th>
+                            <th>Role</th>
+                            <th>Option</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td colSpan={2}>Larry the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                    </tbody>
+                </Table>
             </div>
-            
+
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Create a new Group</Modal.Title>
+                    <Modal.Title>Add new Member</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Input your infomation here!!!</Modal.Body>
+                <Modal.Body>
+                    <div>
+                        Input member email
+                    </div>
+                    <input type="text"></input>
+                    <div>
+                        Create an invitation Link
+                    </div>
+                    <button> Click me!</button>
+                    
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Cancel
