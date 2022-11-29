@@ -9,45 +9,46 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Dashboard = () => {
-    const navigate = useNavigate();
+
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const [group, setGroup] = useState([]);
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const postData = () => {
-        axios.post(`https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData`, {
-            firstName,
-            lastName
-        }).then(() => {
-            navigate('/')
-            getAllData()
-            handleClose()
-        })
-    }
-    const getAllData = () => {
-        axios.get('https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData')
-            .then(res => {
-                console.log("Getting From:  ", res.data)
-                setGroup(res.data)
-            }
-            )
-            .catch(err => console.log(err))
-    }
-    useEffect(() => {
-        getAllData()
-    }, []);
-    const arr = group.map((group) => {
-        return (
-            <div className='group-item'>
-                <div className='group-title'>
-                    <Link to='/infogroup'>{group.firstName}</Link>
-                </div>
-                <div className='group-description'>{group.lastName}</div>
-            </div>
-        )
-    })
+
+    // const navigate = useNavigate();
+    // const [group, setGroup] = useState([]);
+    // const [firstName, setFirstName] = useState('');
+    // const [lastName, setLastName] = useState('');
+    // const postData = () => {
+    //     axios.post(`https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData`, {
+    //         firstName,
+    //         lastName
+    //     }).then(() => {
+    //         navigate('/')
+    //         getAllData()
+    //         handleClose()
+    //     })
+    // }
+    // const getAllData = () => {
+    //     axios.get('https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData')
+    //         .then(res => {
+    //             setGroup(res.data)
+    //         }
+    //         )
+    //         .catch(err => console.log(err))
+    // }
+    // useEffect(() => {
+    //     getAllData()
+    // }, []);
+    // const arr = group.map((group) => {
+    //     return (
+    //         <div className='group-item'>
+    //             <div className='group-title'>
+    //                 <Link to='/infogroup'>{group.firstName}</Link>
+    //             </div>
+    //             <div className='group-description'>{group.lastName}</div>
+    //         </div>
+    //     )
+    // })
     return (
         <>
             <div className='header-dashboard'>
@@ -59,7 +60,67 @@ const Dashboard = () => {
                 </span>
             </div>
             <div class="flex-container">
-                {arr}
+                <div className='group-item'>
+                    <div className='group-title'>
+                        <Link to='/infogroup'>Group Name</Link>
+                    </div>
+                    <div className='group-description'>Group Description</div>
+                </div>
+                <div className='group-item'>
+                    <div className='group-title'>
+                        <Link to='/infogroup'>Group Name</Link>
+                    </div>
+                    <div className='group-description'>Group Description</div>
+                </div>
+                <div className='group-item'>
+                    <div className='group-title'>
+                        <Link to='/infogroup'>Group Name</Link>
+                    </div>
+                    <div className='group-description'>Group Description</div>
+                </div>
+                <div className='group-item'>
+                    <div className='group-title'>
+                        <Link to='/infogroup'>Group Name</Link>
+                    </div>
+                    <div className='group-description'>Group Description</div>
+                </div>
+                <div className='group-item'>
+                    <div className='group-title'>
+                        <Link to='/infogroup'>Group Name</Link>
+                    </div>
+                    <div className='group-description'>Group Description</div>
+                </div>
+                <div className='group-item'>
+                    <div className='group-title'>
+                        <Link to='/infogroup'>Group Name</Link>
+                    </div>
+                    <div className='group-description'>Group Description</div>
+                </div>
+                <div className='group-item'>
+                    <div className='group-title'>
+                        <Link to='/infogroup'>Group Name</Link>
+                    </div>
+                    <div className='group-description'>Group Description</div>
+                </div>
+                <div className='group-item'>
+                    <div className='group-title'>
+                        <Link to='/infogroup'>Group Name</Link>
+                    </div>
+                    <div className='group-description'>Group Description</div>
+                </div>
+                <div className='group-item'>
+                    <div className='group-title'>
+                        <Link to='/infogroup'>Group Name</Link>
+                    </div>
+                    <div className='group-description'>Group Description</div>
+                </div>
+                <div className='group-item'>
+                    <div className='group-title'>
+                        <Link to='/infogroup'>Group Name</Link>
+                    </div>
+                    <div className='group-description'>Group Description</div>
+                </div>
+                {/* {arr} */}
             </div>
 
 
@@ -70,15 +131,15 @@ const Dashboard = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <label>First Name</label>
-                    <input placeholder='First Name' onChange={(e) => setFirstName(e.target.value)} />
+                    <input placeholder='First Name'  />
                     <label>Last Name</label>
-                    <input placeholder='Last Name' onChange={(e) => setLastName(e.target.value)}/>
+                    <input placeholder='Last Name' />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button variant="primary" onClick={postData}>
+                    <Button variant="primary" onClick={handleClose}>
                         OK
                     </Button>
                 </Modal.Footer>

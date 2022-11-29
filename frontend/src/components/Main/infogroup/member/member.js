@@ -27,29 +27,29 @@ const Member = () => {
     //         handleClose()
     //     })
     // }
-    const getAllData = () => {
-        axios.get('https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData')
-            .then(res => {
-                console.log("Getting From:  ", res.data)
-                setMember(res.data)
-            }
-            )
-            .catch(err => console.log(err))
-    }
-    useEffect(() => {
-        getAllData()
-    }, []);
-    const arr = member.map((member) => {
-        return (
-            <tr>
-                <td>{member.id}</td>
-                <td>{member.firstName}</td>
-                <td>{member.lastName}</td>
-                <td>@mdo</td>
-            </tr>
+    // const getAllData = () => {
+    //     axios.get('https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData')
+    //         .then(res => {
+    //             console.log("Getting From:  ", res.data)
+    //             setMember(res.data)
+    //         }
+    //         )
+    //         .catch(err => console.log(err))
+    // }
+    // useEffect(() => {
+    //     getAllData()
+    // }, []);
+    // const arr = member.map((member) => {
+    //     return (
+    //         <tr>
+    //             <td>{member.id}</td>
+    //             <td>{member.firstName}</td>
+    //             <td>{member.lastName}</td>
+    //             <td>@mdo</td>
+    //         </tr>
 
-        )
-    })
+    //     )
+    // })
 
 
     return (
@@ -73,7 +73,73 @@ const Member = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {arr}
+                        {/* {arr} */}
+                        <tr>
+                            <td>ID1</td>
+                            <td>Member1</td>
+                            <td>Member</td>
+                            <td>Option</td>
+                        </tr>
+                        <tr>
+                            <td>ID1</td>
+                            <td>Member1</td>
+                            <td>Member</td>
+                            <td>Option</td>
+                        </tr>
+                        <tr>
+                            <td>ID1</td>
+                            <td>Member1</td>
+                            <td>Member</td>
+                            <td>Option</td>
+                        </tr>
+                        <tr>
+                            <td>ID1</td>
+                            <td>Member1</td>
+                            <td>Member</td>
+                            <td>Option</td>
+                        </tr>
+                        <tr>
+                            <td>ID1</td>
+                            <td>Member1</td>
+                            <td>Member</td>
+                            <td>Option</td>
+                        </tr>
+                        <tr>
+                            <td>ID1</td>
+                            <td>Member1</td>
+                            <td>Member</td>
+                            <td>Option</td>
+                        </tr>
+                        <tr>
+                            <td>ID1</td>
+                            <td>Member1</td>
+                            <td>Member</td>
+                            <td>Option</td>
+                        </tr>
+                        <tr>
+                            <td>ID1</td>
+                            <td>Member1</td>
+                            <td>Member</td>
+                            <td>Option</td>
+                        </tr>
+                        <tr>
+                            <td>ID1</td>
+                            <td>Member1</td>
+                            <td>Member</td>
+                            <td>Option</td>
+                        </tr>
+                        <tr>
+                            <td>ID1</td>
+                            <td>Member1</td>
+                            <td>Member</td>
+                            <td>Option</td>
+                        </tr>
+                        <tr>
+                            <td>ID1</td>
+                            <td>Member1</td>
+                            <td>Member</td>
+                            <td>Option</td>
+                        </tr>
                     </tbody>
                 </Table>
             </div>

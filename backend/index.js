@@ -4,7 +4,8 @@ cookieParser = require('cookie-parser')
 const cors = require('cors')
 
 const authRouter = require ('./components/auth/auth.router')
-
+const userinfoRouter = require ('./components/userinfo/userinfo.router')
+const groupRouter = require('./components/group/group.router')
 const app = express()
 
 
@@ -19,6 +20,8 @@ require('./config/database')
 app.use(cors());
 
 app.use('/api/auth', authRouter);
+app.use('/user', userinfoRouter);
+app.use('/group', groupRouter);
 
 const port = process.env.PORT
 
