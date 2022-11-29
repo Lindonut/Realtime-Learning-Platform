@@ -14,10 +14,10 @@ const Dashboard = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    // const navigate = useNavigate();
-    // const [group, setGroup] = useState([]);
-    // const [firstName, setFirstName] = useState('');
-    // const [lastName, setLastName] = useState('');
+    const navigate = useNavigate();
+    const [group, setGroup] = useState([]);
+    const [groupName, setGroupName] = useState('');
+    const [groupDescription, setGroupDescription] = useState('');
     // const postData = () => {
     //     axios.post(`https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData`, {
     //         firstName,
@@ -49,6 +49,38 @@ const Dashboard = () => {
     //         </div>
     //     )
     // })
+
+    const getAllData = () => {
+        axios.get(`${process.env.REACT_APP_API_URL}/group`)
+            .then(res => {
+                setGroup(res.data)
+            }
+            )
+            .catch(err => console.log(err))
+    }
+    const postGroup = () => {
+        axios.post(`${process.env.REACT_APP_API_URL}/group/add`, {
+            name: groupName,
+            description: groupDescription
+        }).then(() => {
+            navigate('/')
+            getAllData()
+            handleClose()
+        })
+    }
+    useEffect(() => {
+        getAllData()
+    }, []);
+    const arr = group.map((group) => {
+        return (
+            <div className='group-item' key={group._id}>
+                <div className='group-title'>
+                    <Link to={`/infogroup/${group._id}`}>{group.name}</Link>
+                </div>
+                <div className='group-description'>{group.description}</div>
+            </div>
+        )
+    })
     return (
         <>
             <div className='header-dashboard'>
@@ -60,67 +92,7 @@ const Dashboard = () => {
                 </span>
             </div>
             <div class="flex-container">
-                <div className='group-item'>
-                    <div className='group-title'>
-                        <Link to='/infogroup'>Group Name</Link>
-                    </div>
-                    <div className='group-description'>Group Description</div>
-                </div>
-                <div className='group-item'>
-                    <div className='group-title'>
-                        <Link to='/infogroup'>Group Name</Link>
-                    </div>
-                    <div className='group-description'>Group Description</div>
-                </div>
-                <div className='group-item'>
-                    <div className='group-title'>
-                        <Link to='/infogroup'>Group Name</Link>
-                    </div>
-                    <div className='group-description'>Group Description</div>
-                </div>
-                <div className='group-item'>
-                    <div className='group-title'>
-                        <Link to='/infogroup'>Group Name</Link>
-                    </div>
-                    <div className='group-description'>Group Description</div>
-                </div>
-                <div className='group-item'>
-                    <div className='group-title'>
-                        <Link to='/infogroup'>Group Name</Link>
-                    </div>
-                    <div className='group-description'>Group Description</div>
-                </div>
-                <div className='group-item'>
-                    <div className='group-title'>
-                        <Link to='/infogroup'>Group Name</Link>
-                    </div>
-                    <div className='group-description'>Group Description</div>
-                </div>
-                <div className='group-item'>
-                    <div className='group-title'>
-                        <Link to='/infogroup'>Group Name</Link>
-                    </div>
-                    <div className='group-description'>Group Description</div>
-                </div>
-                <div className='group-item'>
-                    <div className='group-title'>
-                        <Link to='/infogroup'>Group Name</Link>
-                    </div>
-                    <div className='group-description'>Group Description</div>
-                </div>
-                <div className='group-item'>
-                    <div className='group-title'>
-                        <Link to='/infogroup'>Group Name</Link>
-                    </div>
-                    <div className='group-description'>Group Description</div>
-                </div>
-                <div className='group-item'>
-                    <div className='group-title'>
-                        <Link to='/infogroup'>Group Name</Link>
-                    </div>
-                    <div className='group-description'>Group Description</div>
-                </div>
-                {/* {arr} */}
+                {arr}
             </div>
 
 
@@ -130,16 +102,16 @@ const Dashboard = () => {
                     <Modal.Title>Create a new Group</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <label>First Name</label>
-                    <input placeholder='First Name'  />
-                    <label>Last Name</label>
-                    <input placeholder='Last Name' />
+                    <label>Group Name</label>
+                    <input placeholder='Group Name' onChange={(e) => setGroupName(e.target.value)} />
+                    <label>Group Description</label>
+                    <input placeholder='Group Description' onChange={(e) => setGroupDescription(e.target.value)} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={postGroup}>
                         OK
                     </Button>
                 </Modal.Footer>

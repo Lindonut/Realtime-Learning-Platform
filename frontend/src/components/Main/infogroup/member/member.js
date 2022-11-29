@@ -8,13 +8,43 @@ import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const Member = () => {
+    let { groupID } = useParams();
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [member, setMember] = useState([]);
+    const getAllData = () => {
+        axios.get(`${process.env.REACT_APP_API_URL}/group/${groupID}/member`)
+            .then(res => {
+                setMember(res.data)
+            }
+            )
+            .catch(err => console.log(err))
+    }
+    useEffect(() => {
+        getAllData()
+    }, []);
+    const arr = member.map((member) => {
+        return (
+            // <div className='group-item' key={group._id}>
+            //     <div className='group-title'>
+            //         <Link to={`/infogroup/${group._id}`}>{group.name}</Link>
+            //     </div>
+            //     <div className='group-description'>{group.description}</div>
+            // </div>
+            <tr key={member.name}>
+                <td>{member.groupID}</td>
+                <td>{member.member}</td>
+                <td>{member.role}</td>
+                <td>Option</td>
+            </tr>
+        )
+    })
+
     // const [firstName, setFirstName] = useState('');
     // const [lastName, setLastName] = useState('');
     // const postData = () => {
@@ -73,75 +103,10 @@ const Member = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {arr} */}
-                        <tr>
-                            <td>ID1</td>
-                            <td>Member1</td>
-                            <td>Member</td>
-                            <td>Option</td>
-                        </tr>
-                        <tr>
-                            <td>ID1</td>
-                            <td>Member1</td>
-                            <td>Member</td>
-                            <td>Option</td>
-                        </tr>
-                        <tr>
-                            <td>ID1</td>
-                            <td>Member1</td>
-                            <td>Member</td>
-                            <td>Option</td>
-                        </tr>
-                        <tr>
-                            <td>ID1</td>
-                            <td>Member1</td>
-                            <td>Member</td>
-                            <td>Option</td>
-                        </tr>
-                        <tr>
-                            <td>ID1</td>
-                            <td>Member1</td>
-                            <td>Member</td>
-                            <td>Option</td>
-                        </tr>
-                        <tr>
-                            <td>ID1</td>
-                            <td>Member1</td>
-                            <td>Member</td>
-                            <td>Option</td>
-                        </tr>
-                        <tr>
-                            <td>ID1</td>
-                            <td>Member1</td>
-                            <td>Member</td>
-                            <td>Option</td>
-                        </tr>
-                        <tr>
-                            <td>ID1</td>
-                            <td>Member1</td>
-                            <td>Member</td>
-                            <td>Option</td>
-                        </tr>
-                        <tr>
-                            <td>ID1</td>
-                            <td>Member1</td>
-                            <td>Member</td>
-                            <td>Option</td>
-                        </tr>
-                        <tr>
-                            <td>ID1</td>
-                            <td>Member1</td>
-                            <td>Member</td>
-                            <td>Option</td>
-                        </tr>
-                        <tr>
-                            <td>ID1</td>
-                            <td>Member1</td>
-                            <td>Member</td>
-                            <td>Option</td>
-                        </tr>
+                        {arr}
                     </tbody>
                 </Table>
+                
             </div>
 
             <Modal show={show} onHide={handleClose}>

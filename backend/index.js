@@ -2,6 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 cookieParser = require('cookie-parser')
 const cors = require('cors')
+const morgan = require('morgan')
+
 
 const authRouter = require ('./components/auth/auth.router')
 const userinfoRouter = require ('./components/userinfo/userinfo.router')
@@ -11,6 +13,7 @@ const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(morgan('common'));
 
 app.use(cookieParser());
 

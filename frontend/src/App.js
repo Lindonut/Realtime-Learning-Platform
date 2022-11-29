@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom'
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Register from './pages/Register'
@@ -11,6 +11,7 @@ import Dashboard from './components/Main/dashboard/dashboard'
 import Infogroup from './components/Main/infogroup/infogroup'
 import Description from './components/Main/infogroup/description/description'
 import Member from './components/Main/infogroup/member/member'
+
 function App() {
   return (
     <AuthContextProvider>
@@ -27,9 +28,9 @@ function App() {
           <Route path='/' element={<Home />}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/infomation" element={<Infomation />} />
-            <Route path="/infogroup" element={<Infogroup />}>
-              <Route path="/infogroup" element={<Description />} />
-              <Route path="/infogroup/member" element={<Member />} />
+            <Route path="/infogroup/:groupID" element={<Infogroup/>}>
+              <Route path="/infogroup/:groupID" element={<Description />} />
+              <Route path="/infogroup/:groupID/member" element={<Member />} />
             </Route>
           </Route>
           <Route path='/verify' element={<Verify />} />
