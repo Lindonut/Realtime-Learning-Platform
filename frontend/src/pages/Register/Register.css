@@ -51,7 +51,7 @@
     text-decoration: none;
   }
   
-  a:link, a:visited {
+  a:visited {
     color: blue;
   }
   

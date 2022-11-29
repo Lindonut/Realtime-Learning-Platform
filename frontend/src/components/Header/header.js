@@ -1,27 +1,36 @@
 import React from 'react'
+import { useContext } from 'react'
 import '../../../src/App.css'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { authContext } from '../../contexts/authContext';
 
 const Header = () => {
+    const { authState: { isAuthenticated, user } } = useContext(authContext)
+    const { logoutUser } = useContext(authContext)
+    const handleClick = async () => {
+        await logoutUser();
+        
+        console.log('Hello world');
+    }
     return (
         <div className='header'>
             <Navbar>
                 <Navbar.Brand>
                     <div className='border-brand'>
-                        <Link to='/' className='title-brand'>LEARNING PLATFORM</Link>
+                        <a href='/' className='title-brand' style={{color: "white", textDecoration: "none"}}>LEARNING PLATFORM</a>
                     </div>
                 </Navbar.Brand>
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end border-info">
-                    <NavDropdown title="YOUR NAME HERE" id="basic-nav-dropdown" className='border-name' >
+                    <NavDropdown title={user.name} style={{color: "white", textDecoration: "none"}} id="basic-nav-dropdown" className='border-name' >
                         <NavDropdown.Item>
-                            <Link to="/infomation" className='dropdowm-item'> My Info</Link>
+                            <Link to="/infomation" style={{color: "black", textDecoration: "none"}} className='dropdowm-item'> My Info</Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item>
-                            <Link to="/infomation" className='dropdowm-item'> Log out</Link>
+                            <Link to="/login" style={{color: "black", textDecoration: "none"}} onClick={handleClick} className='dropdowm-item'> Log out</Link>
                         </NavDropdown.Item>
                     </NavDropdown>
                 </Navbar.Collapse>
