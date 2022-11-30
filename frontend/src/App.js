@@ -27,7 +27,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/' element={<Home />}>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/infomation" element={<Infomation />} />
+            <Route path="/infomation/:id" element={<Infomation />} />
             <Route path="/infogroup/:groupID" element={<Infogroup/>}>
               <Route path="/infogroup/:groupID" element={<Description />} />
               <Route path="/infogroup/:groupID/member" element={<Member />} />

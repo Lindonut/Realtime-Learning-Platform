@@ -27,7 +27,7 @@ const Header = () => {
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end border-info">
                     <NavDropdown title={user.name} style={{color: "white", textDecoration: "none"}} id="basic-nav-dropdown" className='border-name' >
                         <NavDropdown.Item>
-                            <Link to="/infomation" style={{color: "black", textDecoration: "none"}} className='dropdowm-item'> My Info</Link>
+                            <Link to={`/infomation/${user._id}`} style={{color: "black", textDecoration: "none"}} className='dropdowm-item'> My Info</Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item>
                             <Link to="/login" style={{color: "black", textDecoration: "none"}} onClick={handleClick} className='dropdowm-item'> Log out</Link>

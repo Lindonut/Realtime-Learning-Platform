@@ -13,8 +13,8 @@ exports.getAll = async(req, res) =>  {
 };
 exports.getGroupMember = async(req, res) =>  {
     try {
-        const allGroup = await groupmembers.find({groupID: req.params.id});
-        res.status(200).json(allGroup);
+        const listMember = await groupmembers.find({groupID: req.params.id});
+        res.status(200).json(listMember);
     } catch (error) {
         res.status(500).json(error);
     }

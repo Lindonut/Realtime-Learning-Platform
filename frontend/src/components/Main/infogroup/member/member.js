@@ -30,17 +30,10 @@ const Member = () => {
     }, []);
     const arr = member.map((member) => {
         return (
-            // <div className='group-item' key={group._id}>
-            //     <div className='group-title'>
-            //         <Link to={`/infogroup/${group._id}`}>{group.name}</Link>
-            //     </div>
-            //     <div className='group-description'>{group.description}</div>
-            // </div>
             <tr key={member.name}>
-                <td>{member.groupID}</td>
                 <td>{member.member}</td>
                 <td>{member.role}</td>
-                <td>Option</td>
+                <td><Link to={`/infomation/${member.member}`} style={{color: "black", textDecoration: "none"}}> Show Info</Link></td>
             </tr>
         )
     })
@@ -96,7 +89,6 @@ const Member = () => {
                 <Table striped bordered hover size="sm" >
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>Member</th>
                             <th>Role</th>
                             <th>Option</th>
