@@ -4,6 +4,8 @@ import {Link, Navigate} from "react-router-dom"
 import {useContext, useState} from 'react'
 import {authContext} from '../../contexts/authContext'
 import { toast } from "react-toastify"
+import { FcGoogle } from 'react-icons/fc';
+
 
 function Register() {
     const {registerUser} = useContext(authContext)
@@ -56,9 +58,8 @@ function Register() {
         </form>
         <p className="center">May also register with</p>
         <div class="socmed-login">
-                <a href="#g-plus" class="socmed-btn google-btn">
-                    <i class="fa fa-google"></i>
-                    <span>Register with Google</span>
+                <a href="#g-plus" class="buttonGoogle">
+                    <span><FcGoogle /> Google</span>
                 </a>
             </div>
         </div>

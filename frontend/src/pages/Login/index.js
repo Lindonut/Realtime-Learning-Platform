@@ -4,6 +4,7 @@ import {Link, Navigate} from "react-router-dom"
 import {useState, useContext} from 'react'
 import { toast } from "react-toastify"
 import {authContext} from '../../contexts/authContext'
+import { FcGoogle } from 'react-icons/fc';
 
 function Login() {
     const {authState: { isAuthenticated }} = useContext(authContext)
@@ -48,12 +49,11 @@ function Login() {
             </form>
             <p className="center">Or continue with</p>
             <div class="socmed-login">
-                <a href="#google" class="socmed-btn google-btn">
-                    <i class="fa fa-google"></i>
-                    <span>Login with Google</span>
+                <a href="#g-plus" class="buttonGoogle">
+                    <span><FcGoogle /> Google</span>
                 </a>
             </div>
-            </div>
+        </div>
         </div>
     );
 }

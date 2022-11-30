@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer')
 
 function generateAccessToken(user) {
-	return jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, {expiresIn:"60s"});
+	return jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, {expiresIn:"5m"});
 }
 
 function generateRefreshToken(user) {

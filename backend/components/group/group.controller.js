@@ -2,11 +2,13 @@ const groups = require('../../models/groups');
 const groupmembers = require('../../models/groupmembers');
 const groupcoowners = require('../../models/groupcoowners');
 const users = require('../../models/users');
+const crypto = require("crypto");
 
 exports.getAll = async(req, res) =>  {
     try {
-        const allGroup = await groups.find();
-        res.status(200).json(allGroup);
+        const getGroup = await groupmembers.find({ member: req.userId }).populate({path:'member', select: '_id'}).select({"groupID":1, "_id":0, "member":0});
+        const groupDetails = await groups.find()
+        res.status(200).json(groupDetails);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -20,10 +22,13 @@ exports.getGroupMember = async(req, res) =>  {
     }
 };
 exports.addGroup = async(req, res) => {
+    const {name, description}= req.body;
+    const owner = req.userId;
+    const linkCode = crypto.randomBytes(6).toString('hex');
     try {
-        const newGroup = new groups(req.body);
-        const saveNewGroup = await newGroup.save();
-        res.status(200).json(saveNewGroup);
+        const newGroup = new groups({ name, description, owner, linkCode})
+        await newGroup.save();
+        res.status(200).json(newGroup);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -67,5 +72,63 @@ exports.addOne = async (req, res) => {
         res.status(200).json(saveNewGroumember);
     } catch (error) {
         res.status(500).json(error);
+    }
+}
+
+exports.inviteLink = async(req, res) => {
+    try {
+        const group = await groups.findOne({_id: req.params.id});
+        const link = process.env.BASEURL+'/infogroup/invitation/'+group._id +'/'+group.linkCode;
+        res.status(200).json(link);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+
+exports.joinByLink = async(req, res) => {
+    const groupID = req.params.id;
+    const code = req.params.code;
+    const userID = req.userId;
+    const group = await groups.findOne({_id: groupID});
+    if (userID===null) {
+        res.status(500).json({error: "You need to login to join."});
+    }
+    if (group.linkCode === code) {
+        try {
+            const newMember = new groupmembers({ groupID:groupID,member:userID})
+            await newMember.save();
+            res.status(200).json({success: true, message: "Now you have joined this group."});
+        } catch (error) {
+            res.status(500).json({success:false, message:"Error. Can't join this group."});
+        }
+    }
+}
+
+exports.inviteLink = async(req, res) => {
+    try {
+        const group = await groups.findOne({_id: req.params.id});
+        const link = process.env.BASEURL+'/infogroup/invitation/'+group._id +'/'+group.linkCode;
+        res.status(200).json(link);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+
+exports.joinByLink = async(req, res) => {
+    const groupID = req.params.id;
+    const code = req.params.code;
+    const userID = req.userId;
+    const group = await groups.findOne({_id: groupID});
+    if (userID===null) {
+        res.status(500).json({error: "You need to login to join."});
+    }
+    if (group.linkCode === code) {
+        try {
+            const newMember = new groupmembers({ groupID:groupID,member:userID})
+            await newMember.save();
+            res.status(200).json({success: true, message: "Now you have joined this group."});
+        } catch (error) {
+            res.status(500).json({success:false, message:"Error. Can't join this group."});
+        }
     }
 }

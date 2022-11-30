@@ -13,7 +13,8 @@ const groupMemberSchema = new Schema ({
     },
     role: {
         type: String,
-        enum: ['Owner', 'Co-owner', 'Member']
+        enum: ['Owner', 'Co-owner', 'Member'],
+        default: 'Member'
     }
 })
 

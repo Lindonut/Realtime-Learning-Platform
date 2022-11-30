@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import setAccessToken from '../../../utils/setAccessToken'
 import { authContext } from '../../../contexts/authContext';
 
 const Dashboard = () => {
@@ -53,6 +54,9 @@ const Dashboard = () => {
     // })
 
     const getAllData = () => {
+        if (localStorage.token) {
+			setAccessToken(localStorage.token)
+		}
         axios.get(`${process.env.REACT_APP_API_URL}/group`)
             .then(res => {
                 setGroup(res.data)
@@ -71,6 +75,9 @@ const Dashboard = () => {
         .catch(err => console.log(err))
     }
     const postGroup = () => {
+        if (localStorage.token) {
+			setAccessToken(localStorage.token)
+		}
         axios.post(`${process.env.REACT_APP_API_URL}/group/add`, {
             name: groupName,
             description: groupDescription,

@@ -142,9 +142,11 @@ a {
 }
 .infogroup-tool {
   font-size: 14pt;
-  margin-left: 15px;
   justify-content: center;
+  text-align: center;
+  text-decoration: none;
 }
+
 .header-member {
   justify-content: space-between;
   display: flex;
@@ -162,4 +164,9 @@ a {
 }
 .description {
   margin-left: 70px;
+}
+
+.in-group-btn {
+  margin: 10px;
+  font-size: 20pt;
 }

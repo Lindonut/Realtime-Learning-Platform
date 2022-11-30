@@ -10,6 +10,7 @@ import AuthContextProvider from './contexts/authContext'
 import Infomation from './components/Main/infomation/infomation'
 import Dashboard from './components/Main/dashboard/dashboard'
 import Infogroup from './components/Main/infogroup/infogroup'
+import JoinedGroup from './components/Main/infogroup/joinedgroup'
 import Description from './components/Main/infogroup/description/description'
 import Member from './components/Main/infogroup/member/member'
 
@@ -36,6 +37,7 @@ function App() {
           </Route>
           <Route path='/verify' element={<Verify />} />
           <Route path='/verify/:token' element={<VerifySuccess />} />
+          <Route path='/infogroup/invitation/:id/:code' element={<JoinedGroup />} />
         </Routes>
       </Router>
     </AuthContextProvider>

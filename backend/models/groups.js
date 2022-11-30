@@ -17,7 +17,8 @@ const groupSchema = new Schema ({
     },
     linkCode: {
         type: String,
-    },
+        require: true,
+    }
 })
 
 module.exports = mongoose.model('groups', groupSchema)
