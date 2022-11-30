@@ -8,9 +8,15 @@ https://github.com/Lindonut
 ## How to use
 1.
 Run: npm i
+<br/>
 Open backend and add .env file like .env.example
+<br/>
 Run: npm run server
+<br/>
 2.
+<br/>
 Run: npm i
+<br/>
 Open frontend and add .env file like .env.example
+<br/>
 Run: npm start
