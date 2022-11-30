@@ -36,3 +36,14 @@ exports.getOne = async(req, res) =>  {
         res.status(500).json(error);
     }
 };
+
+exports.deleteOne = async(req, res) =>  {
+    try {
+        const member = await groupmembers.findOneAndDelete({groupID: req.params.groupid, member: req.params.memberid})
+        res.status(200).json(member);
+
+
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};

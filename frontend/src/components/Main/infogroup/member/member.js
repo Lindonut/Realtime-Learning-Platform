@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-
+import NavDropdown from 'react-bootstrap/NavDropdown';
 const Member = () => {
     let { groupID } = useParams();
     const navigate = useNavigate();
@@ -28,12 +28,33 @@ const Member = () => {
     useEffect(() => {
         getAllData()
     }, []);
+    const DeleteMember = (member) => {
+        axios.delete(`${process.env.REACT_APP_API_URL}/group/${groupID}/member/delete/${member.member}`)
+        .then (res => {
+            getAllData();
+            navigate(`/infogroup/${groupID}/member`)
+        })
+    }
     const arr = member.map((member) => {
         return (
-            <tr key={member.name}>
+            <tr key={member._id}>
                 <td>{member.member}</td>
                 <td>{member.role}</td>
-                <td><Link to={`/infomation/${member.member}`} style={{color: "black", textDecoration: "none"}}> Show Info</Link></td>
+                <td>
+                    {/* <Link to={`/infomation/${member.member}`} style={{color: "black", textDecoration: "none"}}>
+                         Show Info</Link> */}
+                    <NavDropdown title="Option" id="basic-nav-dropdown" className='border-name' >
+                        <NavDropdown.Item>
+                            <Link to={`/infomation/${member.member}`} style={{ color: "black", textDecoration: "none" }}>Show Info</Link>
+                        </NavDropdown.Item>
+                        <NavDropdown.Item>
+                            <Link to={`/infomation/${member.member}`} style={{ color: "black", textDecoration: "none" }}>Change Role</Link>
+                        </NavDropdown.Item>
+                        <NavDropdown.Item>
+                            <Link onClick={() => DeleteMember(member)} style={{ color: "black", textDecoration: "none" }}>Delete</Link>
+                        </NavDropdown.Item>
+                    </NavDropdown>
+                </td>
             </tr>
         )
     })
@@ -98,7 +119,7 @@ const Member = () => {
                         {arr}
                     </tbody>
                 </Table>
-                
+
             </div>
 
             <Modal show={show} onHide={handleClose}>
