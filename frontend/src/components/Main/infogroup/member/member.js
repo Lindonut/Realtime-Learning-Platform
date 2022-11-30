@@ -36,9 +36,14 @@ const Member = () => {
         })
     }
     const ChangeRole = (member) => {
+        let updateRole = "";
+        if(member.role == "Member") updateRole = "Co-owner";
+        if(member.role == "Co-owner") updateRole = "Owner";
+        if(member.role == "Owner") updateRole = "Member";
+
         axios.patch(`${process.env.REACT_APP_API_URL}/group/${groupID}/member/update/${member.member}`,
         {
-            role: "Member"
+            role: updateRole
         })
         .then (res => {
             getAllData();
