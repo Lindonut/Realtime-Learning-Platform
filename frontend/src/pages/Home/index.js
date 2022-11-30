@@ -6,7 +6,7 @@ import {useContext} from 'react'
 import '../../App.css'
 import {authContext} from '../../contexts/authContext'
 function Home() {
-    const {authState: { isAuthenticated }} = useContext(authContext)
+    const {authState: { isAuthenticated}} = useContext(authContext)
 
     if (!isAuthenticated) return <Navigate to='/login' />
     return (

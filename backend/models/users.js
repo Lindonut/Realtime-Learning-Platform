@@ -17,7 +17,8 @@ const userSchema = new Schema ({
     },
     verified: {
         type: Boolean,
-        default: false
+        default: false,
+        require: true
     },
     refreshToken: {
         type: String

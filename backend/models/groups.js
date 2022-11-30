@@ -7,7 +7,8 @@ const groupSchema = new Schema ({
         require: true
     },
     description: {
-        type: String
+        type: String,
+        sparse: true
     },
     owner: {
         type: Schema.Types.ObjectID,

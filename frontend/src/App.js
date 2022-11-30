@@ -4,7 +4,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Register from './pages/Register'
 import Login from './pages/Login/index'
 import Home from './pages/Home'
-import Verify from './pages/Verify'
+import Verify from './pages/Verify/verify'
+import VerifySuccess from './pages/Verify/verifySuccess'
 import AuthContextProvider from './contexts/authContext'
 import Infomation from './components/Main/infomation/infomation'
 import Dashboard from './components/Main/dashboard/dashboard'
@@ -34,6 +35,7 @@ function App() {
             </Route>
           </Route>
           <Route path='/verify' element={<Verify />} />
+          <Route path='/verify/:token' element={<VerifySuccess />} />
         </Routes>
       </Router>
     </AuthContextProvider>

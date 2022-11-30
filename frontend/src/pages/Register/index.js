@@ -17,13 +17,17 @@ function Register() {
     const onSubmit = async data => {
         try {
             const registerData = await registerUser(data.name, data.email, data.password)
-            setSuccess(true);
+            console.log(registerData)
             if(registerData.success)
+            {
                 toast.success(registerData.message);
+                setSuccess(true);
+            }
             else  
                 toast.warning(registerData.message);
         } catch (error) {
             toast.error(error.message);
+            console.log(error)
         }
     };
 
