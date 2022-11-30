@@ -14,7 +14,10 @@ const groupSchema = new Schema ({
         type: Schema.Types.ObjectID,
         ref: 'users',
         
-    }
+    },
+    linkCode: {
+        type: String,
+    },
 })
 
 module.exports = mongoose.model('groups', groupSchema)
