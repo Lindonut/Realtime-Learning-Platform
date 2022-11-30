@@ -35,20 +35,28 @@ const Member = () => {
             navigate(`/infogroup/${groupID}/member`)
         })
     }
+    const ChangeRole = (member) => {
+        axios.patch(`${process.env.REACT_APP_API_URL}/group/${groupID}/member/update/${member.member}`,
+        {
+            role: "Member"
+        })
+        .then (res => {
+            getAllData();
+            navigate(`/infogroup/${groupID}/member`)
+        })
+    }
     const arr = member.map((member) => {
         return (
             <tr key={member._id}>
                 <td>{member.member}</td>
                 <td>{member.role}</td>
                 <td>
-                    {/* <Link to={`/infomation/${member.member}`} style={{color: "black", textDecoration: "none"}}>
-                         Show Info</Link> */}
                     <NavDropdown title="Option" id="basic-nav-dropdown" className='border-name' >
                         <NavDropdown.Item>
                             <Link to={`/infomation/${member.member}`} style={{ color: "black", textDecoration: "none" }}>Show Info</Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item>
-                            <Link to={`/infomation/${member.member}`} style={{ color: "black", textDecoration: "none" }}>Change Role</Link>
+                            <Link onClick={() => ChangeRole(member)} style={{ color: "black", textDecoration: "none" }}>Change Role</Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item>
                             <Link onClick={() => DeleteMember(member)} style={{ color: "black", textDecoration: "none" }}>Delete</Link>

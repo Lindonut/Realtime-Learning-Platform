@@ -1,12 +1,12 @@
 import '../../../App.css'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import { authContext } from '../../../contexts/authContext';
 
 const Dashboard = () => {
 
@@ -18,6 +18,8 @@ const Dashboard = () => {
     const [group, setGroup] = useState([]);
     const [groupName, setGroupName] = useState('');
     const [groupDescription, setGroupDescription] = useState('');
+
+    const { authState: { isAuthenticated, user } } = useContext(authContext)
     // const postData = () => {
     //     axios.post(`https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData`, {
     //         firstName,
@@ -58,12 +60,24 @@ const Dashboard = () => {
             )
             .catch(err => console.log(err))
     }
+    const addGroupMember = (req) => {
+        axios.post(`${process.env.REACT_APP_API_URL}/group/addmember`, {
+            groupID: req.data._id,
+            member: user._id,
+            role: "Owner"
+        }).then(res => {
+        }
+        )
+        .catch(err => console.log(err))
+    }
     const postGroup = () => {
         axios.post(`${process.env.REACT_APP_API_URL}/group/add`, {
             name: groupName,
-            description: groupDescription
-        }).then(() => {
+            description: groupDescription,
+            owner: user._id
+        }).then((res) => {
             navigate('/')
+            addGroupMember(res);
             getAllData()
             handleClose()
         })
@@ -94,9 +108,6 @@ const Dashboard = () => {
             <div class="flex-container">
                 {arr}
             </div>
-
-
-
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Create a new Group</Modal.Title>

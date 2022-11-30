@@ -47,3 +47,25 @@ exports.deleteOne = async(req, res) =>  {
         res.status(500).json(error);
     }
 };
+exports.updateOne = async (req,res) => {
+    try {
+        const member = await groupmembers.findOneAndUpdate(
+            {groupID: req.params.groupid, member: req.params.memberid},
+            req.body);
+        const saveMember = await member.save();
+        res.status(200).json(saveMember);
+        // const updateMember = Object.assign(member, res.body);
+        // const updateMembersave = await updateMember.save();
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+exports.addOne = async (req, res) => {
+    try {
+        const newGroupmember = new groupmembers(req.body);
+        const saveNewGroumember = await newGroupmember.save();
+        res.status(200).json(saveNewGroumember);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}

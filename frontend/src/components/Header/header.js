@@ -21,7 +21,7 @@ const Header = () => {
             <Navbar>
                 <Navbar.Brand>
                     <div className='border-brand'>
-                        <a href='/' className='title-brand' style={{color: "white", textDecoration: "none"}}>LEARNING PLATFORM</a>
+                        <a href='/' className='title-brand' style={{color: "white", textDecoration: "none"}}>REALTIME LEARNING PLATFORM</a>
                     </div>
                 </Navbar.Brand>
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end border-info">
