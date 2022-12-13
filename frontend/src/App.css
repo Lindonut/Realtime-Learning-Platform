@@ -170,3 +170,60 @@ a {
   margin: 10px;
   font-size: 20pt;
 }
+
+.main-editing-slide{
+  display: flex;
+  flex-direction: row;
+}
+.slide-list{
+  width: 50vh;
+  height:75vh;
+  overflow: scroll;
+  background-color: red;
+  margin: 10px;
+}
+.slide-main{
+  width: 150vh;
+  background-color: yellow;
+  margin: 10px;
+  border: solid black 3pt;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.slide-detail{
+  width: 80vh;
+  background-color: green;
+  margin: 10px;
+  border: solid black 3pt;
+}
+
+.slide-item {
+  height: 100px;
+  margin: 5px;
+  background-color: orange;
+  display: flex;
+  flex-direction: row;
+}
+.slide-item:hover{
+  background-color: red;
+}
+
+.slide-item.active{ background-color: green;}
+
+.slide-preview {
+  background-color: aqua;
+  margin: 5px 5px 5px 15px;
+  width: 100%;
+  border: solid black 2pt;
+}
+.slide-fullview {
+  background-color: aqua;
+  height: 100%;
+  width: 100%;
+}
+.slide-fulldetail{
+  background-color: yellow;
+  height: 100%;
+  width: 100%;
+}

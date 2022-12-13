@@ -30,6 +30,9 @@ const Header = () => {
                             <Link to={`/infomation/${user._id}`} style={{color: "black", textDecoration: "none"}} className='dropdowm-item'> My Info</Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item>
+                            <Link to={`/presentation/${user._id}`} style={{color: "black", textDecoration: "none"}} className='dropdowm-item'> My Presentation</Link>
+                        </NavDropdown.Item>
+                        <NavDropdown.Item>
                             <Link to="/login" style={{color: "black", textDecoration: "none"}} onClick={handleClick} className='dropdowm-item'> Log out</Link>
                         </NavDropdown.Item>
                     </NavDropdown>
