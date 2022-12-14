@@ -3,13 +3,11 @@ const Schema = mongoose.Schema
 
 const groupCoownerSchema = new Schema ({
     groupID: {
-        type: Schema.Types.ObjectID,
-        ref: 'groups',
+        type: Schema.Types.ObjectId,
         require: true
     },
     coowner: {
-        type: Schema.Types.ObjectID,
-        ref: 'users',
+        type: Schema.Types.ObjectId
     }
 })
 

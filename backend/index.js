@@ -3,13 +3,14 @@ const bodyParser = require('body-parser')
 cookieParser = require('cookie-parser')
 const cors = require('cors')
 const morgan = require('morgan')
+const socket = require('socket.io');
 
 
 const authRouter = require ('./components/auth/auth.router')
 const userinfoRouter = require ('./components/userinfo/userinfo.router')
 const groupRouter = require('./components/group/group.router')
-const app = express()
 
+const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -22,12 +23,20 @@ require('./config/database')
 
 app.use(cors());
 
+//Route
+
 app.use('/api/auth', authRouter);
 app.use('/user', userinfoRouter);
 app.use('/group', groupRouter);
 
+//Server configuration
+
 const port = process.env.PORT
 
-app.listen(port, () => {
+  const server = app.listen(port, () => {
     console.log(`Server running on port ${port}`)
 })
+
+//Socket.io configuration
+
+const io = socket(server);

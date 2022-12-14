@@ -5,6 +5,7 @@ import {useState, useContext} from 'react'
 import { toast } from "react-toastify"
 import {authContext} from '../../contexts/authContext'
 import { FcGoogle } from 'react-icons/fc';
+import JoinCode from '../../components/JoinCode/index'
 
 function Login() {
     const {authState: { isAuthenticated }} = useContext(authContext)
@@ -31,29 +32,32 @@ function Login() {
     if (isAuthenticated) return <Navigate to='/' />
 
     return (
-        <div className="container">
-            <div className="containerForm">
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <h1>LOGIN</h1>
-                <label>Email</label>
-                <input type="email" {...login("email",{required: "This is required"})} placeholder="Email"/>
-                <p className="pWarning">{errors.email?.message}</p>
-                <label>Password</label>
-                <input type="password" {...login("password",{required: "This is required"})} placeholder="Password"/>
-                <p className="pWarning">{errors.password?.message}</p>
-                <div className="center">
-                    <p className="pStyle">Not have an account?&nbsp;</p>
-                    <Link to="/register" className="linkDecoration"> Register Here!</Link>
+        <div>
+            <JoinCode/>
+            <div className="container">
+                <div className="containerForm">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <h1>LOGIN</h1>
+                        <label>Email</label>
+                        <input type="email" {...login("email",{required: "This is required"})} placeholder="Email"/>
+                        <p className="pWarning">{errors.email?.message}</p>
+                        <label>Password</label>
+                        <input type="password" {...login("password",{required: "This is required"})} placeholder="Password"/>
+                        <p className="pWarning">{errors.password?.message}</p>
+                        <div className="center">
+                            <p className="pStyle">Not have an account?&nbsp;</p>
+                            <Link to="/register" className="linkDecoration"> Register Here!</Link>
+                        </div>
+                        <input type="submit" value="Login"/>
+                    </form>
+                    <p className="center">Or continue with</p>
+                    <div class="socmed-login">
+                        <a href="#g-plus" class="buttonGoogle">
+                            <span><FcGoogle /> Google</span>
+                        </a>
+                    </div>
                 </div>
-                <input type="submit" value="Login"/>
-            </form>
-            <p className="center">Or continue with</p>
-            <div class="socmed-login">
-                <a href="#g-plus" class="buttonGoogle">
-                    <span><FcGoogle /> Google</span>
-                </a>
             </div>
-        </div>
         </div>
     );
 }

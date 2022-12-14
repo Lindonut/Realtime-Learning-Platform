@@ -5,6 +5,7 @@ import {useContext, useState} from 'react'
 import {authContext} from '../../contexts/authContext'
 import { toast } from "react-toastify"
 import { FcGoogle } from 'react-icons/fc';
+import JoinCode from '../../components/JoinCode/index'
 
 
 function Register() {
@@ -36,34 +37,37 @@ function Register() {
     if (success) return <Navigate to='/verify' />
 
   return (
-      <div className="container">
-        <div className="containerForm">
-            <form onSubmit={handleSubmit(onSubmit)}>
-            <h1>REGISTER</h1>
-            <label>Name</label>
-            <input {...register("name", {required: "This is required"})} placeholder="Name" />
-            <p className="pWarning">{errors.name?.message}</p>
-            <label>Email</label>
-            <input type="email" {...register("email",{required: "This is required"})} placeholder="Email"/>
-            <p className="pWarning">{errors.email?.message}</p>
-            <label>Password</label>
-            <input type="password" {...register("password",{required: "This is required.", minLength: {
-                value: 6, message: "Require atleast 6 characters."}})} placeholder="Password"/>
-            <p className="pWarning">{errors.password?.message}</p>
-            <div className="center">
-                <p className="pStyle">Already have an account?&nbsp;</p>
-                <Link to="/login" className="linkDecoration"> Login Here!</Link>
-            </div>
-            <input type="submit" value="Register"/>
-        </form>
-        <p className="center">May also register with</p>
-        <div class="socmed-login">
-                <a href="#g-plus" class="buttonGoogle">
-                    <span><FcGoogle /> Google</span>
-                </a>
+    <div>
+        <JoinCode />
+        <div className="container">
+            <div className="containerForm">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                <h1>REGISTER</h1>
+                <label>Name</label>
+                <input {...register("name", {required: "This is required"})} placeholder="Name" />
+                <p className="pWarning">{errors.name?.message}</p>
+                <label>Email</label>
+                <input type="email" {...register("email",{required: "This is required"})} placeholder="Email"/>
+                <p className="pWarning">{errors.email?.message}</p>
+                <label>Password</label>
+                <input type="password" {...register("password",{required: "This is required.", minLength: {
+                    value: 6, message: "Require atleast 6 characters."}})} placeholder="Password"/>
+                <p className="pWarning">{errors.password?.message}</p>
+                <div className="center">
+                    <p className="pStyle">Already have an account?&nbsp;</p>
+                    <Link to="/login" className="linkDecoration"> Login Here!</Link>
+                </div>
+                <input type="submit" value="Register"/>
+            </form>
+            <p className="center">May also register with</p>
+            <div class="socmed-login">
+                    <a href="#g-plus" class="buttonGoogle">
+                        <span><FcGoogle /> Google</span>
+                    </a>
+                </div>
             </div>
         </div>
-      </div>
+    </div>
   );
 }
 

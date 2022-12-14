@@ -83,7 +83,8 @@
 .title-brand {
   text-align: center;
   margin-left: 20px;
-  color: white
+  color: white !important;
+  text-decoration: none !important;
 }
 .header-navbar {
   width: all;
@@ -226,4 +227,25 @@ a {
   background-color: yellow;
   height: 100%;
   width: 100%;
+}
+
+
+.code-box {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: flex;
+}
+
+.code-text {
+  margin:auto;
+  color: white !important;
+}
+
+.center-code-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0 100px;
 }

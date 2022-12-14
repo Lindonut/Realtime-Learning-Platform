@@ -15,6 +15,8 @@ import Infogroup from './components/Main/infogroup/infogroup'
 import JoinedGroup from './components/Main/infogroup/joinedgroup'
 import Description from './components/Main/infogroup/description/description'
 import Member from './components/Main/infogroup/member/member'
+import io from 'socket.io-client';
+import { useEffect} from 'react';
 
 function App() {
   return (

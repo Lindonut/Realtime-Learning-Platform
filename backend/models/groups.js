@@ -11,9 +11,7 @@ const groupSchema = new Schema ({
         sparse: true
     },
     owner: {
-        type: Schema.Types.ObjectID,
-        ref: 'users',
-        
+        type: Schema.Types.ObjectId,
     },
     linkCode: {
         type: String,

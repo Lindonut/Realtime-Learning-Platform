@@ -3,13 +3,12 @@ const Schema = mongoose.Schema
 
 const groupMemberSchema = new Schema ({
     groupID: {
-        type: Schema.Types.ObjectID,
-        ref: 'groups',
+        type: Schema.Types.ObjectId,
         require: true
     },
     member: {
-        type: Schema.Types.ObjectID,
-        ref: 'users',
+        type: Schema.Types.ObjectId,
+        unique: true,
     },
     role: {
         type: String,
