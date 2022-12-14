@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom'
 const Slide = () => {
     const orange = { background: 'orange' };
     const gray = { background: 'gray' };
-    let { id } = useParams();
+    let { id, idpp } = useParams();
     const [slides, setSlide] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -36,14 +36,15 @@ const Slide = () => {
     const addSlide = () => {
         let number = slides.length +1;
         slides.push({ id: number, bg: orange, content: "This is Review" })
-        navigate(`/presentation/${id}/edit`);
+        navigate(`/presentation/${id}/${idpp}/edit`);
         
     }
     const deleteSlide = () => {
         alert("Do you want to delete slide " + (currentIndex + 1) + "?");
         slides.splice(currentIndex,1);
         reMarkId();
-        navigate(`/presentation/${id}/edit`);
+        setCurrentIndex(currentIndex-1);
+        navigate(`/presentation/${id}/${idpp}/edit`);
     }
     const arr = slides.map((slide, index) => {
         let classNameX = "slide-item";
@@ -91,7 +92,7 @@ const Slide = () => {
     return (
         <>
             <div className='header-dashboard'>
-                <span className="dashboard-title">Presentation: YOUR PRESENTATION NAME HERE</span>
+                <span className="dashboard-title">Presentation: {idpp}</span>
                 <span className='create-group-btn'>
                     <Button variant="primary" onClick={addSlide} >
                         Create Slide

@@ -28,6 +28,19 @@ const Presentation = () => {
         navigate(`/presentation/${id}`);
         handleClose();
     }
+    const deletePresentation = () => {
+        alert("Do you want to delete presentation " + (currentIndex + 1) + "?");
+        presentations.splice(currentIndex,1);
+        reMarkId();
+        setCurrentIndex(currentIndex-1);
+        navigate(`/presentation/${id}`);
+    }
+    const reMarkId = () => {
+        for (var i = 0;i < presentations.length; i++) 
+        {
+            presentations[i].id = i+1;
+        }
+    }
     useEffect(() => {
         const lists = []
         lists.push({ id: 1, presentationName: "Presentation-1" });
@@ -39,14 +52,22 @@ const Presentation = () => {
         lists.push({ id: 7, presentationName: "Presentation-7" });
         setPresentation(lists)
     }, [])
-    const arr = presentations.map((presentation) => {
+    const arr = presentations.map((presentation, index) => {
+        let active = {};
+        if (index === currentIndex)
+        {
+            active = {background: 'aquas'};
+        }
         return (
             <>
-                <tr key={presentation.id}>
+                <tr key={presentation.id}
+                onClick={()=> setCurrentIndex(index)}
+                style = {active}
+                >
                     <th>{presentation.id}</th>
                     <th>{presentation.presentationName}</th>
                     <th>
-                        <Link to={`/presentation/${id}/edit`} style={{ color: "black", textDecoration: "none" }}>Edit</Link>
+                        <Link to={`/presentation/${id}/${presentation.presentationName}/edit`} style={{ color: "black", textDecoration: "none" }}>Edit</Link>
                     </th>
                 </tr>
             </>
@@ -60,6 +81,9 @@ const Presentation = () => {
                 <span className='create-group-btn'>
                     <Button variant="primary" onClick={handleShow}>
                         Create Presentation
+                    </Button>
+                    <Button variant="primary" onClick={deletePresentation}>
+                        Delete Presentation
                     </Button>
                 </span>
             </div>

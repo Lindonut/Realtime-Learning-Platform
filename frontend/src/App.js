@@ -33,7 +33,7 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/infomation/:id" element={<Infomation />} />
             <Route path="/presentation/:id" element={<Presentation />} />
-            <Route path="/presentation/:id/edit" element={<Slide />} />
+            <Route path="/presentation/:id/:idpp/edit" element={<Slide />} />
             <Route path="/infogroup/:groupID" element={<Infogroup />}>
               <Route path="/infogroup/:groupID" element={<Description />} />
               <Route path="/infogroup/:groupID/member" element={<Member />} />
