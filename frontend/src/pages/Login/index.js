@@ -21,14 +21,15 @@ function Login() {
         try {
             const loginData = await loginUser(data.email, data.password)
             if(loginData.success)
+            {
                 toast.success(loginData.message);
+            }
             else  
                 toast.warning(loginData.message);
         } catch (error) {
             toast.error(error.message);
         }
     };
-
     if (isAuthenticated) return <Navigate to='/' />
 
     return (

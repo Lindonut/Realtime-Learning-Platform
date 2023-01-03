@@ -91,19 +91,22 @@
 }
 .dropdown-item {
   font-size: 12pt;
-  color: black;
+  color: black !important;
+  text-decoration: none !important;
 }
 .border-brand {
-  margin-left: 50px;
+  margin-left: 20px;
 }
 .border-info {
-  margin-right: 70px;
+  margin-right: 40px;
 }
 .header {
   background-color: #0000D1;
 }
 .border-name {
   text-align: center;
+  text-decoration: none !important;
+  color:white !important;
 }
 a {
   text-decoration: none;
@@ -114,20 +117,15 @@ a {
   display: block;
   width: auto;
 }
-.header-dashboard {
-  justify-content: space-between;
-  display: flex;
-}
 
 .dashboard-title {
-  margin: 10px 0 0 70px;
+  margin: 10px 0px 0px 50px;
   font-size: 20pt;
   text-transform: uppercase;
 }
 
 .create-group-btn {
-  margin: 10px 70px 10px 0px;
-  font-size: 20pt;
+  margin: 10px 30px 0px 0px;
   text-transform: uppercase;
 }
 .flex-container {
@@ -247,5 +245,6 @@ a {
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin: 0 100px;
+  margin: 0 150px;
 }
+

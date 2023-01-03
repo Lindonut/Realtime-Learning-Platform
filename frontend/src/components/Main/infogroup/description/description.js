@@ -17,8 +17,7 @@ const Description = () => {
     const getAllData = () => {
         axios.get(`${process.env.REACT_APP_API_URL}/group/${groupID}`)
             .then(res => {
-                setGroup(res.data)
-                console.log(res.data)
+                setGroup(res.data.group)
             }
             )
             .catch(err => console.log(err))

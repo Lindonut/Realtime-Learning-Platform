@@ -7,8 +7,8 @@ const groupController = require("./group.controller");
 
 router.get("/", verifyToken, groupController.getAll);
 router.get("/:id", groupController.getOne);
-router.post("/:id/invitation", groupController.inviteLink);
-router.post("/invitation/:id/:code",verifyToken, groupController.joinByLink);
+//router.get("/invitation/:id/:code",verifyToken, groupController.confirmJoin);
+router.post("/confirmedjoin/:id/:code",verifyToken, groupController.joinByLink);
 router.get("/:id/member", groupController.getGroupMember);
 router.post("/add",verifyToken, groupController.addGroup);
 router.post("/addmember", groupController.addOne);

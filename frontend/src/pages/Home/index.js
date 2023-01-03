@@ -13,7 +13,6 @@ function Home() {
         <div>
                 <Header />
                 <Main />
-                <Footer />
 
         </div>
     );

@@ -33,20 +33,19 @@ const Header = () => {
                     </Form> 
                 </div>     
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end border-info">
-                    <NavDropdown title={user.name} style={{color: "white", textDecoration: "none"}} id="basic-nav-dropdown" className='border-name' >
+                    <NavDropdown title={user.name} id="basic-nav-dropdown" className='border-name' align="end">
                         <NavDropdown.Item>
-                            <Link to={`/infomation/${user._id}`} style={{color: "black", textDecoration: "none"}} className='dropdowm-item'> My Info</Link>
+                            <Link to={`/infomation/${user._id}`} className='dropdown-item'> My Info</Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item>
-                            <Link to={`/presentation/${user._id}`} style={{color: "black", textDecoration: "none"}} className='dropdowm-item'> My Presentation</Link>
+                            <Link to={`/presentation/${user._id}`} className='dropdown-item'> My Presentation</Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item>
-                            <Link to="/login" style={{color: "black", textDecoration: "none"}} onClick={handleClick} className='dropdowm-item'> Log out</Link>
+                            <Link to={`/login`}  onClick={handleClick} className='dropdown-item'> Log Out</Link>
                         </NavDropdown.Item>
                     </NavDropdown>
                 </Navbar.Collapse>
             </Navbar>
-
         </div>
     )
 }

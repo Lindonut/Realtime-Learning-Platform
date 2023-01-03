@@ -24,6 +24,13 @@ const presentationSchema = new Schema ({
         type: String,
         enum: ['Public', 'Group'],
         default: 'Public'
+    },
+    group: {
+        type: [Schema.Types.ObjectId]
+    },
+    slide: 
+    {
+        type: [String]
     }
 })
 

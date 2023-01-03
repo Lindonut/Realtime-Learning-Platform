@@ -36,7 +36,7 @@ exports.getAll = async(req, res) =>  {
             },
            {
                 $project: {
-                "_id": 0,
+                "_id": 1,
                 "name": 1,
                 "description": 1,
                 "owner": "$owner.name",
@@ -62,7 +62,7 @@ exports.getGroupMember = async(req, res) =>  {
 exports.addGroup = async(req, res) => {
     const {name, description}= req.body;
     const owner = req.userId;
-    const linkCode = crypto.randomBytes(6).toString('hex');
+    const linkCode = crypto.randomBytes(4).toString('hex');
     try {
         const newGroup = new groups({ name, description, owner, linkCode});
         await newGroup.save();
@@ -75,7 +75,8 @@ exports.addGroup = async(req, res) => {
 exports.getOne = async(req, res) =>  {
     try {
         const group = await groups.findOne({_id: req.params.id});
-        res.status(200).json(group);
+        const link = process.env.BASEURL+'/infogroup/invitation/'+group._id +'/'+group.linkCode;
+        res.status(200).json({group, link});
     } catch (error) {
         res.status(500).json(error);
     }
@@ -85,8 +86,6 @@ exports.deleteOne = async(req, res) =>  {
     try {
         const member = await groupmembers.findOneAndDelete({groupID: req.params.groupid, member: req.params.memberid})
         res.status(200).json(member);
-
-
     } catch (error) {
         res.status(500).json(error);
     }
@@ -114,59 +113,26 @@ exports.addOne = async (req, res) => {
     }
 }
 
-exports.inviteLink = async(req, res) => {
-    try {
-        const group = await groups.findOne({_id: req.params.id});
-        const link = process.env.BASEURL+'/infogroup/invitation/'+group._id +'/'+group.linkCode;
-        res.status(200).json(link);
-    } catch (error) {
-        res.status(500).json(error);
-    }
-}
-
 exports.joinByLink = async(req, res) => {
     const groupID = req.params.id;
     const code = req.params.code;
     const userID = req.userId;
     const group = await groups.findOne({_id: groupID});
     if (userID===null) {
-        res.status(500).json({error: "You need to login to join."});
+        res.status(400).json({message: "You need to login to join."});
     }
-    if (group.linkCode === code) {
-        try {
-            const newMember = new groupmembers({ groupID:groupID,member:userID})
-            await newMember.save();
-            res.status(200).json({success: true, message: "Now you have joined this group."});
-        } catch (error) {
-            res.status(500).json({success:false, message:"Error. Can't join this group."});
-        }
+    if (group.linkCode != code || group == null) {
+        res.status(400).json({message: "The link is not right. Please check again."});
     }
-}
-
-exports.inviteLink = async(req, res) => {
+    const checkMem =  await groupmembers.find({ groupID: group._id})
+    const check = checkMem.filter(x => x.member == currentUser);
+    if (check != null) {
+        res.status(200).json({success: true, message: "Already joined this group."});
+    }
     try {
-        const group = await groups.findOne({_id: req.params.id});
-        const link = process.env.BASEURL+'/infogroup/invitation/'+group._id +'/'+group.linkCode;
-        res.status(200).json(link);
+        const newMember = new groupmembers({ groupID:groupID,member:userID})
+        res.status(200).json({success: true, message: "Now you have joined this group."});
     } catch (error) {
         res.status(500).json(error);
-    }
-}
-
-exports.joinByLink = async(req, res) => {
-    const groupID = req.params.id;
-    const code = req.params.code;
-    const userID = req.userId;
-    const group = await groups.findOne({_id: groupID});
-    if (userID===null) {
-        res.status(500).json({error: "You need to login to join."});
-    }
-    if (group.linkCode === code) {
-        try {
-            const newMember = new groupmembers({ groupID:groupID,member:userID})
-            res.status(200).json({success: true, message: "Now you have joined this group."});
-        } catch (error) {
-            res.status(500).json({success:false, message:"Error. Can't join this group."});
-        }
     }
 }

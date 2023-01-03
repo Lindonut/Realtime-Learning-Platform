@@ -22,6 +22,7 @@ const Infogroup = () => {
     const handleClose = () => setShow(false);
     const [group, setGroup] = useState([]);
     const [link, setLink] = useState();
+    const [code, setCode] = useState();
     useEffect(() => {
         getAllData()
 
@@ -31,7 +32,8 @@ const Infogroup = () => {
         axios.get(`${process.env.REACT_APP_API_URL}/group/${groupID}`)
             .then(res => {
                 setGroup(res.data)
-                console.log(res.data)
+                setLink(res.data.link)
+                setCode(res.data.group.linkCode)
             }
             )
             .catch(err => console.log(err))
@@ -39,11 +41,6 @@ const Infogroup = () => {
 
     const handleShow = () => {
         setShow(true);
-        axios.post(`${process.env.REACT_APP_API_URL}/group/${groupID}/invitation`)
-        .then(res => {
-            setLink(res.data)
-            console.log(res.data)
-        })
     }
 
 
@@ -71,13 +68,12 @@ const Infogroup = () => {
                     <Modal.Title>Group Invitation Link</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <label>Code</label>
+                    <input value={code} readOnly/>
                     <label>Link</label>
                     <input value={link} readOnly/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Cancel
-                    </Button>
                     <Button variant="primary" onClick={handleClose}>
                         OK
                     </Button>
