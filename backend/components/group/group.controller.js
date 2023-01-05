@@ -125,7 +125,7 @@ exports.joinByLink = async(req, res) => {
         res.status(400).json({message: "The link is not right. Please check again."});
     }
     const checkMem =  await groupmembers.find({ groupID: group._id})
-    const check = checkMem.filter(x => x.member == currentUser);
+    const check = checkMem.filter(x => x.member == userID);
     if (check != null) {
         res.status(200).json({success: true, message: "Already joined this group."});
     }

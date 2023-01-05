@@ -98,19 +98,7 @@ const Dashboard = () => {
     }
 
     const joinGroup = () => {
-        if (localStorage.token) {
-			setAccessToken(localStorage.token)
-		}
-        axios.post(`${process.env.REACT_APP_API_URL}/group/add`, {
-            name: groupName,
-            description: groupDescription,
-            owner: user._id
-        }).then((res) => {
-            navigate('/')
-            addGroupMember(res);
-            getAllData()
-            handleCloseJoin()
-        })
+        navigate(`/${groupInvitationCode}`)
     }
 
     useEffect(() => {
