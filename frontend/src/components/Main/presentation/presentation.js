@@ -9,38 +9,10 @@ import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
+import Navbar from 'react-bootstrap/Navbar';
 const Presentation = () => {
     const { authState: { isAuthenticated, user } } = useContext(authContext)
     let { id } = useParams();
-    const [presentations, setPresentation] = useState([]);
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    const [show, setShow] = useState(false);
-
-    const [presentationName, setPresentationName] = useState('');
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    const navigate = useNavigate();
-    const postPresentation = () => {
-        let number = presentations.length +1;
-        presentations.push({ id: number, presentationName: presentationName})
-        navigate(`/presentation/${id}`);
-        handleClose();
-    }
-    const deletePresentation = () => {
-        alert("Do you want to delete presentation " + (currentIndex + 1) + "?");
-        presentations.splice(currentIndex,1);
-        reMarkId();
-        setCurrentIndex(currentIndex-1);
-        navigate(`/presentation/${id}`);
-    }
-    const reMarkId = () => {
-        for (var i = 0;i < presentations.length; i++) 
-        {
-            presentations[i].id = i+1;
-        }
-    }
     useEffect(() => {
         const lists = []
         lists.push({ id: 1, presentationName: "Presentation-1" });
@@ -52,23 +24,65 @@ const Presentation = () => {
         lists.push({ id: 7, presentationName: "Presentation-7" });
         setPresentation(lists)
     }, [])
-    const arr = presentations.map((presentation, index) => {
-        let active = {};
-        if (index === currentIndex)
-        {
-            active = {background: 'aquas'};
+    const [presentations, setPresentation] = useState([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const [show, setShow] = useState(false);
+    const [showShare, setShowShare] = useState(false);
+
+    const [typeShare, setTypeShare] = useState("view");
+    const [presentationName, setPresentationName] = useState();
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const navigate = useNavigate();
+    const postPresentation = () => {
+        let number = presentations.length + 1;
+        presentations.push({ id: number, presentationName: presentationName })
+        navigate(`/presentation/${id}`);
+        handleClose();
+    }
+    const deletePresentation = () => {
+        alert("Do you want to delete presentation " + (currentIndex + 1) + "?");
+        presentations.splice(currentIndex, 1);
+        reMarkId();
+        setCurrentIndex(currentIndex - 1);
+        navigate(`/presentation/${id}`);
+    }
+    const editPresentation = () => {
+        navigate(`/presentation/${id}/${presentations[currentIndex].presentationName}/edit`)
+    }
+    const sharePresentation = () => {
+
+        setShowShare(true);
+    }
+    const handleCloseShare = () => {
+        setShowShare(false);
+    }
+    const reMarkId = () => {
+        for (var i = 0; i < presentations.length; i++) {
+            presentations[i].id = i + 1;
         }
+    }
+    const demoChange =(e) => {
+        setTypeShare(e.target.value);
+        console.log("/presentation/"+id+"/"+ presentations[currentIndex].presentationName+"/"+typeShare);
+    }
+    const arr = presentations.map((presentation, index) => {
+        let classNameX = "presentation-item";
+
+        if (index === currentIndex) {
+            classNameX = classNameX + " " + "active";
+        }
+
         return (
             <>
                 <tr key={presentation.id}
-                onClick={()=> setCurrentIndex(index)}
-                style = {active}
+                    onClick={() => setCurrentIndex(index)}
+                    className={classNameX}
                 >
                     <th>{presentation.id}</th>
                     <th>{presentation.presentationName}</th>
-                    <th>
-                        <Link to={`/presentation/${id}/${presentation.presentationName}/edit`} style={{ color: "black", textDecoration: "none" }}>Edit</Link>
-                    </th>
                 </tr>
             </>
 
@@ -76,24 +90,29 @@ const Presentation = () => {
     })
     return (
         <>
-            <div className='header-dashboard'>
+            <Navbar bg="light" variant="light">
                 <span className="dashboard-title">Presentation Page</span>
-                <span className='create-group-btn'>
-                    <Button variant="primary" onClick={handleShow}>
-                        Create Presentation
-                    </Button>
-                    <Button variant="primary" onClick={deletePresentation}>
-                        Delete Presentation
-                    </Button>
-                </span>
-            </div>
+                <Navbar.Collapse className="justify-content-end border-info">
+                    <span className='create-group-btn'>
+                        <Button variant='primary' onClick={handleShow}>Create</Button>
+                    </span>
+                    <span className='create-group-btn'>
+                        <Button variant='primary' onClick={deletePresentation}>Delete</Button>
+                    </span>
+                    <span className='create-group-btn'>
+                        <Button variant='primary' onClick={editPresentation}>Edit</Button>
+                    </span>
+                    <span className='create-group-btn'>
+                        <Button variant='primary' onClick={sharePresentation}>Share</Button>
+                    </span>
+                </Navbar.Collapse>
+            </Navbar>
             <div className='table-member'>
                 <Table striped bordered hover size="sm" >
                     <thead hidden={true}>
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -116,6 +135,26 @@ const Presentation = () => {
                     </Button>
                     <Button variant="primary" onClick={postPresentation}>
                         OK
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <Modal show={showShare} onHide={handleCloseShare}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Share Presentation</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <label>Type Name</label>
+                    <select className='select' value={typeShare} onChange={demoChange}>
+                        <option>view</option>
+                        <option>edit</option>
+                        <option>group</option>
+                    </select>
+                    <label>Link</label>
+                    <input value={typeShare}/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" onClick={handleCloseShare}>
+                        Cancel
                     </Button>
                 </Modal.Footer>
             </Modal>

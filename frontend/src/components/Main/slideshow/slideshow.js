@@ -7,7 +7,7 @@ import axios from 'axios'
 import Chart from "react-apexcharts";
 
 
-const MyChart = () => {
+const SlideShow = () => {
     const [state, setState] = useState({
         options: {
             colors: ["#E91E63"],
@@ -39,4 +39,4 @@ const MyChart = () => {
     );
 }
 
-export default MyChart
+export default SlideShow

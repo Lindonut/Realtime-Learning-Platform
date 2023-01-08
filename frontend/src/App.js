@@ -17,7 +17,7 @@ import Member from './components/Main/infogroup/member/member'
 import io from 'socket.io-client';
 import { useEffect, useContext } from 'react';
 import { authContext } from '../src/contexts/authContext';
-import MyChart from './components/Main/chart/chart';
+import SlideShow from './components/Main/slideshow/slideshow';
 
 function App() {
   const { authState: { isAuthenticated, user } } = useContext(authContext)
@@ -43,7 +43,7 @@ function App() {
                 <Route path="/infogroup/:groupID" element={<Description />} />
                 <Route path="/infogroup/:groupID/member" element={<Member />} />
               </Route>
-              <Route path="/presentation/:id/:idpp/chart" element={<MyChart />} />
+              <Route path="/presentation/:id/:idpp/slideshow" element={<SlideShow />} />
               
             </Route>
             <Route path="*" element={<Navigate to='/' />} />

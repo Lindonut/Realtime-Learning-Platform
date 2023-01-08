@@ -48,7 +48,21 @@ const Slide = () => {
     const changeType = (e) => {
         slides[currentIndex].type = e.target.value; navigate(`/presentation/${id}/${idpp}/edit`);
     }
-
+    const changeOption1 = (e) => {
+        slides[currentIndex].choice[0] = e.target.value; navigate(`/presentation/${id}/${idpp}/edit`);
+    }
+    const changeOption2 = (e) => {
+        slides[currentIndex].choice[1] = e.target.value; navigate(`/presentation/${id}/${idpp}/edit`);
+    }
+    const changeOption3 = (e) => {
+        slides[currentIndex].choice[2] = e.target.value; navigate(`/presentation/${id}/${idpp}/edit`);
+    }
+    const changeOption4 = (e) => {
+        slides[currentIndex].choice[3] = e.target.value; navigate(`/presentation/${id}/${idpp}/edit`);
+    }
+    const changeParagraph = (e) => {
+        slides[currentIndex].paragraph = e.target.value; navigate(`/presentation/${id}/${idpp}/edit`);
+    }
     const reMarkId = () => {
         for (var i = 0; i < slides.length; i++) {
             slides[i].id = i + 1;
@@ -56,8 +70,10 @@ const Slide = () => {
     }
     const addSlide = () => {
         let number = slides.length + 1;
-        slides.push({ id: number, type: "Multiple Choice", heading: "This is Review1", paragraph: "",
-        choice: [0, 0, 0, 0], layout: "Bars", image: "" })
+        slides.push({
+            id: number, type: "Multiple Choice", heading: "This is Review1", paragraph: "",
+            choice: [0, 0, 0, 0], layout: "Bars", image: ""
+        })
         navigate(`/presentation/${id}/${idpp}/edit`);
 
     }
@@ -73,23 +89,69 @@ const Slide = () => {
         }
         navigate(`/presentation/${id}/${idpp}/edit`);
     }
-    const viewChart = () => {
-        navigate(`/presentation/${id}/${idpp}/chart`);
+    const slideShow = () => {
+        navigate(`/presentation/${id}/${idpp}/slideshow`);
     }
     const arr = slides.map((slide, index) => {
         let classNameX = "slide-item";
 
         if (index === currentIndex)
             classNameX = classNameX + " " + "active"
+        if (slide.type == "Multiple Choice") {
+            return (
+                <div className={classNameX}
+                    onClick={() => setCurrentIndex(index)}
+                    key={slide.id}>
+                    <h4>{slide.id}</h4>
+                    <div className='slide-preview'>
+                        <div className='slide-multiple-choice-question'>
+                            <div>{slide.heading}</div>
+                        </div>
+                        <div className='slide-multiple-choice-option'>
+                            <div className='slide-multiple-choice-option-item'>{slide.choice[0]}</div>
+                            <div className='slide-multiple-choice-option-item'>{slide.choice[1]}</div>
+                            <div className='slide-multiple-choice-option-item'>{slide.choice[2]}</div>
+                            <div className='slide-multiple-choice-option-item'>{slide.choice[3]}</div>
+                        </div>
 
-        return (
-            <div className={classNameX}
-                onClick={() => setCurrentIndex(index)}
-                key={slide.id}>
-                <h4>{slide.id}</h4>
-                <div className='slide-preview'>{slide.heading}</div>
-            </div>
-        )
+                    </div>
+                </div>
+            )
+        }
+        else if (slide.type == "Heading") {
+            return (
+                <div className={classNameX}
+                    onClick={() => setCurrentIndex(index)}
+                    key={slide.id}>
+                    <h4>{slide.id}</h4>
+                    <div className='slide-preview'>
+                        <div className='slide-heading-heading'>
+                            <div>{slide.heading}</div>
+                        </div>
+                        <div className='slide-heading-subheading'>
+                            <div>{slide.paragraph}</div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div className={classNameX}
+                    onClick={() => setCurrentIndex(index)}
+                    key={slide.id}>
+                    <h4>{slide.id}</h4>
+                    <div className='slide-preview'>
+                        <div className='slide-heading-heading'>
+                            <div>{slide.heading}</div>
+                        </div>
+                        <div className='slide-heading-subheading'>
+                            <div>{slide.paragraph}</div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
     })
     const arr2 = slides.map((slide, index) => {
         if (index === currentIndex) {
@@ -97,11 +159,14 @@ const Slide = () => {
                 return (
                     <div className='slide-main' key={slide.id}>
                         <div className='slide-fullview'>
-                            <div>
-                                Heading: {slides[currentIndex].heading}
+                            <div className='slide-multiple-choice-question-full'>
+                                <div>{slide.heading}</div>
                             </div>
-                            <div>
-                                Các lựa chọn sẽ nằm ở đây
+                            <div className='slide-multiple-choice-option-full'>
+                                <div className='slide-multiple-choice-option-item-full'>{slide.choice[0]}</div>
+                                <div className='slide-multiple-choice-option-item-full'>{slide.choice[1]}</div>
+                                <div className='slide-multiple-choice-option-item-full'>{slide.choice[2]}</div>
+                                <div className='slide-multiple-choice-option-item-full'>{slide.choice[3]}</div>
                             </div>
                         </div>
                     </div>
@@ -111,11 +176,11 @@ const Slide = () => {
                 return (
                     <div className='slide-main' key={slide.id}>
                         <div className='slide-fullview'>
-                            <div>
-                                Heading: {slides[currentIndex].heading}
+                            <div className='slide-heading-heading-full'>
+                                <div>{slide.heading}</div>
                             </div>
-                            <div>
-                                Sub Heading: {slides[currentIndex].paragraph}
+                            <div className='slide-heading-subheading-full'>
+                                <div>{slide.paragraph}</div>
                             </div>
                         </div>
                     </div>
@@ -125,11 +190,11 @@ const Slide = () => {
                 return (
                     <div className='slide-main' key={slide.id}>
                         <div className='slide-fullview'>
-                            <div>
-                                Heading: {slides[currentIndex].heading}
+                            <div className='slide-paragraph-heading-full'>
+                                <div>{slide.heading}</div>
                             </div>
-                            <div>
-                                Paragraph: {slides[currentIndex].paragraph}
+                            <div className='slide-paragraph-paragraph-full'>
+                                <div>{slide.paragraph}</div>
                             </div>
                         </div>
                     </div>
@@ -152,10 +217,10 @@ const Slide = () => {
                             <div>Your Question</div>
                             <input placeholder={slides[currentIndex].heading} onChange={(e) => changeQuestion(e)} />
                             <div>Your Options</div>
-                            <input placeholder={slides[currentIndex].choice[0]} />
-                            <input placeholder={slides[currentIndex].choice[1]} />
-                            <input placeholder={slides[currentIndex].choice[2]}/>
-                            <input placeholder={slides[currentIndex].choice[3]} />
+                            <input placeholder={slides[currentIndex].choice[0]} onChange={(e) => changeOption1(e)} />
+                            <input placeholder={slides[currentIndex].choice[1]} onChange={(e) => changeOption2(e)} />
+                            <input placeholder={slides[currentIndex].choice[2]} onChange={(e) => changeOption3(e)} />
+                            <input placeholder={slides[currentIndex].choice[3]} onChange={(e) => changeOption4(e)} />
                         </div>
                     </div>
                 )
@@ -173,7 +238,7 @@ const Slide = () => {
                             <div>Your Heading</div>
                             <input placeholder={slides[currentIndex].heading} onChange={(e) => changeQuestion(e)} />
                             <div>Your Sub Heading</div>
-                            <input className='long-text' placeholder={slides[currentIndex].paragraph} />
+                            <input className='long-text' placeholder={slides[currentIndex].paragraph} onChange={(e) => changeParagraph(e)} />
                         </div>
                     </div>
                 )
@@ -192,7 +257,7 @@ const Slide = () => {
                             <div>Your Heading</div>
                             <input placeholder={slides[currentIndex].heading} onChange={(e) => changeQuestion(e)} />
                             <div>Your Paragraph</div>
-                            <input className='long-text' placeholder={slides[currentIndex].paragraph} />
+                            <input className='long-text' placeholder={slides[currentIndex].paragraph} onChange={(e) => changeParagraph(e)} />
                         </div>
                     </div>
                 )
@@ -206,17 +271,17 @@ const Slide = () => {
                 <Navbar.Collapse className="justify-content-end border-info">
                     <span className='edit-slide-btn'>
                         <Button variant="primary" onClick={addSlide} >
-                            Create Slide
+                            Create
                         </Button>
                     </span>
                     <span className='edit-slide-btn'>
                         <Button variant="primary" onClick={deleteSlide} >
-                            Delete Slide
+                            Delete
                         </Button>
                     </span>
                     <span className='edit-slide-btn'>
-                        <Button variant="primary" onClick={viewChart} >
-                            View Chart
+                        <Button variant="primary" onClick={slideShow} >
+                            Show
                         </Button>
                     </span>
 

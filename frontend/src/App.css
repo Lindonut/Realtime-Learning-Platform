@@ -208,7 +208,9 @@ a {
   background-color: red;
 }
 
-.slide-item.active{ background-color: green;}
+.slide-item.active{ 
+  background-color: green;
+}
 
 .slide-preview {
   background-color: aqua;
@@ -261,4 +263,100 @@ a {
 }
 .chart{
   background-color: #0000D1;
+}
+.presentation-item{
+  background-color: white;
+}
+.presentation-item:hover{
+  background-color: lightgray;
+}
+
+.presentation-item.active{ 
+  background-color: lightblue;
+}
+
+.slide-multiple-choice-question{
+  background-color: yellow;
+  height: 60%;
+  overflow: hidden;
+  text-align: center;
+}
+.slide-multiple-choice-option {
+  background-color: blue;
+  display: flex;
+  flex-direction: row;
+  height: 40%;
+  overflow: hidden;
+  text-align: center;
+}
+.slide-multiple-choice-option-item {
+  width: 25%;
+  overflow: hidden;
+}
+.slide-heading-heading{
+  background-color: yellow;
+  height: 65%;
+  overflow: hidden;
+  text-align: center;
+}
+.slide-heading-subheading{
+  background-color: blue;
+  height: 35%;
+  overflow: hidden;
+  text-align: center;
+}
+.slide-paragraph-heading{
+  background-color: yellow;
+  height: 65%;
+  overflow: hidden;
+  text-align: center;
+}
+.slide-paragraph-paragraph{
+  background-color: blue;
+  height: 35%;
+  overflow: hidden;
+  text-align: center;
+}
+
+.slide-multiple-choice-question-full{
+  background-color: yellow;
+  height: 60%;
+  overflow: hidden;
+  text-align: center;
+}
+.slide-multiple-choice-option-full {
+  background-color: blue;
+  display: flex;
+  flex-direction: row;
+  height: 40%;
+  overflow: hidden;
+  text-align: center;
+}
+.slide-multiple-choice-option-item-full {
+  width: 25%;
+  overflow: hidden;
+}
+.slide-heading-heading-full{
+  background-color: yellow;
+  height: 65%;
+  overflow: hidden;
+  text-align: center;
+}
+.slide-heading-subheading-full{
+  background-color: blue;
+  height: 35%;
+  overflow: hidden;
+  text-align: center;
+}
+.slide-paragraph-heading-full{
+  background-color: yellow;
+  height: 65%;
+  overflow: hidden;
+  text-align: center;
+}
+.slide-paragraph-paragraph-full{
+  background-color: blue;
+  height: 35%;
+  overflow: hidden;
+  text-align: center;
 }
