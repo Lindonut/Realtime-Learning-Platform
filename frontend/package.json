@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@hookform/resolvers": "^2.9.10",
+    "@react-oauth/google": "^0.5.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -11,6 +13,7 @@
     "bootstrap": "^5.2.3",
     "crypto": "^1.0.1",
     "firebase": "^9.15.0",
+    "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-bootstrap": "^2.6.0",
@@ -23,7 +26,8 @@
     "reactstrap": "^9.1.5",
     "recharts": "^2.2.0",
     "socket.io-client": "^4.5.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

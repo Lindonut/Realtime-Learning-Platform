@@ -5,13 +5,14 @@ import Register from './pages/Register'
 import Login from './pages/Login/index'
 import Home from './pages/Home'
 import Verify from './pages/Verify/verify'
+import RecoverMail from './pages/ForgotPassword/entermail'
+import NewPassword from './pages/ForgotPassword/enternewpassword'
 import VerifySuccess from './pages/Verify/verifySuccess'
 import Infomation from './components/Main/infomation/infomation'
 import Presentation from './components/Main/presentation/presentation';
 import Slide from './components/Main/slide/slide';
 import Dashboard from './components/Main/dashboard/dashboard'
 import Infogroup from './components/Main/infogroup/infogroup'
-import ConfirmJoin from './components/Main/infogroup/confirmjoin'
 import Description from './components/Main/infogroup/description/description'
 import Member from './components/Main/infogroup/member/member'
 import io from 'socket.io-client';
@@ -38,8 +39,7 @@ function App() {
               <Route path="/infomation/:id" element={<Infomation />} />
               <Route path="/presentation/:id" element={<Presentation />} />
               <Route path="/presentation/:id/:idpp/edit" element={<Slide />} />
-              <Route path="/infogroup/invitation/:groupID/:code" element={<ConfirmJoin />} />
-              <Route path="/infogroup/:groupID" element={<Infogroup />}>
+                <Route path="/infogroup/:groupID" element={<Infogroup />}>
                 <Route path="/infogroup/:groupID" element={<Description />} />
                 <Route path="/infogroup/:groupID/member" element={<Member />} />
               </Route>
@@ -51,9 +51,11 @@ function App() {
         ) : (
           <>
             <Route path='/register' element={<Register />} />
-            <Route path='/verify' element={<Verify />} />
-            <Route path='/verify/:token' element={<VerifySuccess />} />
+            <Route path='/verify/:userID' element={<Verify />} />
+            <Route path='/verifyCompleted/:token' element={<VerifySuccess />} />
             <Route path='/login' element={<Login />} />
+          <Route path='/fogotPassword' element={<RecoverMail />} />
+          <Route path='/resetPassword/:token' element={<NewPassword />} />
             <Route path="*" element={<Navigate to='/login' />} />
           </>
         )}

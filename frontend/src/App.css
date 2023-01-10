@@ -273,6 +273,9 @@ a {
   margin: 0 150px;
 }
 
+.sendBtn {
+  margin: 20px;
+}
 .select {
   width: 100%;
   height: 40px;

@@ -1,30 +1,35 @@
 import './Register.css';
 import { useForm } from "react-hook-form";
-import {Link, Navigate} from "react-router-dom"
+import {Link, Navigate, useNavigate} from "react-router-dom"
 import {useContext, useState} from 'react'
 import {authContext} from '../../contexts/authContext'
 import { toast } from "react-toastify"
-import { FcGoogle } from 'react-icons/fc';
 import JoinCode from '../../components/JoinCode/index'
+import GoogleLoginButton from '../../components/Buttons/GoogleLogin';
 
 
 function Register() {
     const {registerUser} = useContext(authContext)
     const [success, setSuccess] = useState(false);
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: {errors} } 
     = useForm({
-        mode: "onChange", 
+        mode: "onTouched", 
         defaultValues: {name: '',email: '',password: ''},
         criteriaMode: "all",
     });
+    let user;
     const onSubmit = async data => {
         try {
             const registerData = await registerUser(data.name, data.email, data.password)
-            console.log(registerData)
             if(registerData.success)
             {
                 toast.success(registerData.message);
                 setSuccess(true);
+                user = registerData.newUser;
+                let userID = user._id;
+                console.log("user", user);
+                navigate(`/verify/${userID}`);
             }
             else  
                 toast.warning(registerData.message);
@@ -34,11 +39,11 @@ function Register() {
         }
     };
 
-    if (success) return <Navigate to='/verify' />
-
   return (
     <div>
         <JoinCode />
+        <br />
+        <br />
         <div className="container">
             <div className="containerForm">
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,13 +63,9 @@ function Register() {
                     <Link to="/login" className="linkDecoration"> Login Here!</Link>
                 </div>
                 <input type="submit" value="Register"/>
-            </form>
+                </form>
             <p className="center">May also register with</p>
-            <div class="socmed-login">
-                    <a href="#g-plus" class="buttonGoogle">
-                        <span><FcGoogle /> Google</span>
-                    </a>
-                </div>
+            <GoogleLoginButton/>
             </div>
         </div>
     </div>

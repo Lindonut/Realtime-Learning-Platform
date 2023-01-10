@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import setAccessToken from '../../../utils/setAccessToken'
 import { authContext } from '../../../contexts/authContext';
 import Navbar from 'react-bootstrap/Navbar';
+import { toast } from "react-toastify"
 
 const Dashboard = () => {
 
@@ -25,40 +26,9 @@ const Dashboard = () => {
     const [groupName, setGroupName] = useState('');
     const [groupDescription, setGroupDescription] = useState('');
 
-    const [groupInvitationCode, setGroupInvitationCode] = useState('');
+    const [groupInvitation, setGroupInvitation] = useState('');
 
     const { authState: { isAuthenticated, user } } = useContext(authContext)
-    // const postData = () => {
-    //     axios.post(`https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData`, {
-    //         firstName,
-    //         lastName
-    //     }).then(() => {
-    //         navigate('/')
-    //         getAllData()
-    //         handleClose()
-    //     })
-    // }
-    // const getAllData = () => {
-    //     axios.get('https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData')
-    //         .then(res => {
-    //             setGroup(res.data)
-    //         }
-    //         )
-    //         .catch(err => console.log(err))
-    // }
-    // useEffect(() => {
-    //     getAllData()
-    // }, []);
-    // const arr = group.map((group) => {
-    //     return (
-    //         <div className='group-item'>
-    //             <div className='group-title'>
-    //                 <Link to='/infogroup'>{group.firstName}</Link>
-    //             </div>
-    //             <div className='group-description'>{group.lastName}</div>
-    //         </div>
-    //     )
-    // })
 
     const getAllData = () => {
         if (localStorage.token) {
@@ -71,16 +41,7 @@ const Dashboard = () => {
             )
             .catch(err => console.log(err))
     }
-    const addGroupMember = (req) => {
-        axios.post(`${process.env.REACT_APP_API_URL}/group/addmember`, {
-            groupID: req.data._id,
-            member: user._id,
-            role: "Owner"
-        }).then(res => {
-        }
-        )
-        .catch(err => console.log(err))
-    }
+
     const postGroup = () => {
         if (localStorage.token) {
 			setAccessToken(localStorage.token)
@@ -91,14 +52,32 @@ const Dashboard = () => {
             owner: user._id
         }).then((res) => {
             navigate('/')
-            addGroupMember(res);
             getAllData()
             handleCloseCreate()
         })
     }
-
-    const joinGroup = () => {
-        navigate(`/${groupInvitationCode}`)
+    const link = groupInvitation.split('/');
+    const length = link.length;
+    const groupID = link[length - 2];
+    const code = link[length - 1];
+    const joinGroup = async() => {
+        if (localStorage.token) {
+			setAccessToken(localStorage.token)
+		}
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/group/invitation/${groupID}/${code}`)
+            if(res.data.success)
+            {
+                toast.success(res.data.message); 
+            }
+            else  
+                toast.warning(res.data.message)
+        } catch (error) {
+            toast.error(error.message);
+        }
+        navigate('/')
+        getAllData()
+        handleCloseJoin();
     }
 
     useEffect(() => {
@@ -156,8 +135,8 @@ const Dashboard = () => {
                     <Modal.Title>Join Group</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <label>Enter Group Invitation Code</label>
-                    <input placeholder='Group Invitation Code' onChange={(e) => setGroupInvitationCode(e.target.value)} />
+                    <label>Enter Group Invitation</label>
+                    <input placeholder='Group Invitation' onChange={(e) => setGroupInvitation(e.target.value)} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseJoin}>

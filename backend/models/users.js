@@ -11,14 +11,21 @@ const userSchema = new Schema ({
         unique: true
     },
     password: {
-        type: String
+        type: String,
+        sparse: true
     },
     verified: {
         type: Boolean,
         default: false,
     },
+    type: {
+        type: String,
+        enum: ['Local', 'Google'],
+        default: 'Local',
+    },
     refreshToken: {
-        type: String
+        type: String,
+        sparse: true
     }
 })
 

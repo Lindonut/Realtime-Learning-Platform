@@ -33,7 +33,6 @@ const Infogroup = () => {
             .then(res => {
                 setGroup(res.data)
                 setLink(res.data.link)
-                setCode(res.data.group.linkCode)
             }
             )
             .catch(err => console.log(err))
@@ -68,8 +67,6 @@ const Infogroup = () => {
                     <Modal.Title>Group Invitation Link</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <label>Code</label>
-                    <input value={code} readOnly/>
                     <label>Link</label>
                     <input value={link} readOnly/>
                 </Modal.Body>
