@@ -8,10 +8,14 @@ import Chart from "react-apexcharts";
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
+import Modal from 'react-bootstrap/Modal';
 const SlideShow = () => {
     let { id, idpp } = useParams();
     const [slides, setSlide] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [show, setShow] = useState(false);
+    const [chatquestion, setChatquestion] = useState();
+    const [chatlist, setChatlist] = useState([]);
     const navigate = useNavigate();
     // useEffect(() => {
     //     const lists = []
@@ -41,7 +45,28 @@ const SlideShow = () => {
     //     });
     //     setSlide(lists)
     // }, [])
-
+    useEffect(() => {
+        const lists = []
+        lists.push({
+            content: "Question 1:"
+        });
+        lists.push({
+            content: "Question 2:"
+        });
+        lists.push({
+            content: "Question 3:"
+        });
+        lists.push({
+            content: "Question 4:"
+        });
+        lists.push({
+            content: "Question 5:"
+        });
+        lists.push({
+            content: "Question 6:"
+        });
+        setChatlist(lists)
+    }, [])
 
     const getAllData = () => {
         axios.get(`${process.env.REACT_APP_API_URL}/slide/${idpp}`)
@@ -61,10 +86,9 @@ const SlideShow = () => {
     const changeCurrentIndexLeft = () => {
         if (currentIndex > 0) {
             setCurrentIndex(currentIndex - 1)
-            if(slides[currentIndex-1].type == "Multiple Choice")
-            {
-                state.options.xaxis.categories = slides[currentIndex-1].choices;
-                state.series[0].data = slides[currentIndex-1].result;
+            if (slides[currentIndex - 1].type == "Multiple Choice") {
+                state.options.xaxis.categories = slides[currentIndex - 1].choices;
+                state.series[0].data = slides[currentIndex - 1].result;
             }
         }
         else {
@@ -75,10 +99,9 @@ const SlideShow = () => {
     const changeCurrentIndexRight = () => {
         if (currentIndex < slides.length - 1) {
             setCurrentIndex(currentIndex + 1)
-            if(slides[currentIndex+1].type == "Multiple Choice")
-            {
-                state.options.xaxis.categories = slides[currentIndex+1].choices;
-                state.series[0].data = slides[currentIndex+1].result;
+            if (slides[currentIndex + 1].type == "Multiple Choice") {
+                state.options.xaxis.categories = slides[currentIndex + 1].choices;
+                state.series[0].data = slides[currentIndex + 1].result;
             }
         }
         else {
@@ -89,6 +112,16 @@ const SlideShow = () => {
     const showindex = () => {
         console.log("Current now: " + currentIndex);
     }
+    const chatting = () => {
+        setShow(true);
+    }
+    const handleClose = () => {
+        setShow(false);
+    }
+    const postChatquestion = () => {
+        chatlist.splice(chatquestion, 1);
+        handleClose();
+    }
     const [state, setState] = useState({
         options: {
             colors: ["#E91E63"],
@@ -96,13 +129,13 @@ const SlideShow = () => {
                 id: "basic-bar",
             },
             xaxis: {
-                categories: [0,0,0,0],
+                categories: [0, 0, 0, 0],
             },
         },
         series: [
             {
                 name: "People Born",
-                data: [0,0,0,0],
+                data: [0, 0, 0, 0],
             },
         ],
     });
@@ -153,6 +186,13 @@ const SlideShow = () => {
             }
         }
     })
+    const arr2 = chatlist.map((chat, index) => {
+        return (
+            <div>
+                <span>{chat.content}</span>
+            </div>
+        )
+    })
     return (
         <div className='slideshow-full'>
             <div className='slideshow-left'>
@@ -166,7 +206,27 @@ const SlideShow = () => {
             <div className='slideshow-right'>
                 <Button className='slideshow-exit-btn' variant='primary' onClick={exitSlideShow}>EXIT</Button>
                 <Button className='slideshow-right-btn' variant='primary' onClick={changeCurrentIndexRight}>RIGHT</Button>
+                <Button className='slideshow-chat-btn' variant='primary' onClick={chatting}>CHAT</Button>
             </div>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>List Question</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <label>List question</label>
+                    {arr2}
+                    <label>Your question you want to mark</label>
+                    <input placeholder='Input index here' onChange={(e) => setChatquestion(e.target.value)} />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button variant="primary" onClick={postChatquestion}>
+                        OK
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 }

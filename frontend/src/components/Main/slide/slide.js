@@ -127,7 +127,7 @@ const Slide = () => {
         navigate(`/presentation/${id}/${idpp}/edit`);
     }
     const slideShow = () => {
-        navigate(`/presentation/${id}/${idpp}/slideshowview`);
+        navigate(`/presentation/${id}/${idpp}/slideshow`);
     }
     const shareShow = () => {
         alert("Fighting!")

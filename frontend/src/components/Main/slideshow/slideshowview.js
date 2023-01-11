@@ -8,14 +8,39 @@ import Chart from "react-apexcharts";
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
-
+import Modal from 'react-bootstrap/Modal';
 const SlideShowView = () => {
     let { id, idpp } = useParams();
     const [slides, setSlide] = useState([]);
     const [select, setSelect] = useState();
     const [currentIndex, setCurrentIndex] = useState(0);
     const navigate = useNavigate();
+    const [show, setShow] = useState(false);
+    const [chatquestion, setChatquestion] = useState("");
+    const [chatlist, setChatlist] = useState([]);
 
+    useEffect(() => {
+        const lists = []
+        lists.push({
+            content: "Question 1:"
+        });
+        lists.push({
+            content: "Question 2:"
+        });
+        lists.push({
+            content: "Question 3:"
+        });
+        lists.push({
+            content: "Question 4:"
+        });
+        lists.push({
+            content: "Question 5:"
+        });
+        lists.push({
+            content: "Question 6:"
+        });
+        setChatlist(lists)
+    }, [])
     const getAllData = () => {
         axios.get(`${process.env.REACT_APP_API_URL}/slide/${idpp}`)
             .then(res => {
@@ -42,7 +67,6 @@ const SlideShowView = () => {
         else {
             setCurrentIndex(0)
         }
-        showindex();
     }
     const changeCurrentIndexRight = () => {
         if (currentIndex < slides.length - 1) {
@@ -55,10 +79,16 @@ const SlideShowView = () => {
         else {
             setCurrentIndex(slides.length - 1)
         }
-        showindex();
     }
-    const showindex = () => {
-        console.log("Current now: " + currentIndex);
+    const chatting = () => {
+        setShow(true);
+    }
+    const handleClose = () => {
+        setShow(false);
+    }
+    const postChatquestion = () => {
+        chatlist.push({ content: chatquestion });
+        handleClose();
     }
     const changeResult = (e) => {
         const selectnumber = parseInt(select)
@@ -109,19 +139,19 @@ const SlideShowView = () => {
                                 </label>
                             </div>
                             <div className='slideshowview-multiple-choice-option-item'>
-                                    <input  className = "abc" type="radio" name="a" value="1" onClick={(e) => setSelect(e.target.value)} />
+                                <input className="abc" type="radio" name="a" value="1" onClick={(e) => setSelect(e.target.value)} />
                                 <label className='abcd'>
                                     {slide.choices[1]}
                                 </label>
                             </div>
                             <div className='slideshowview-multiple-choice-option-item'>
-                                    <input  className = "abc" type="radio" name="a" value="2" onClick={(e) => setSelect(e.target.value)} />
+                                <input className="abc" type="radio" name="a" value="2" onClick={(e) => setSelect(e.target.value)} />
                                 <label className='abcd'>
                                     {slide.choices[2]}
                                 </label>
                             </div>
                             <div className='slideshowview-multiple-choice-option-item'>
-                                    <input  className = "abc" type="radio" name="a" value="3" onClick={(e) => setSelect(e.target.value)} />
+                                <input className="abc" type="radio" name="a" value="3" onClick={(e) => setSelect(e.target.value)} />
                                 <label className='abcd'>
                                     {slide.choices[3]}
                                 </label>
@@ -159,8 +189,17 @@ const SlideShowView = () => {
             }
         }
     })
+    const arr2 = chatlist.map((chat) => {
+        return (
+            <div>
+                <div>{chat.content}</div>
+                <br></br>
+            </div>
+        )
+    })
     return (
         <div className='slideshow-full'>
+
             <div className='slideshow-left'>
                 <Button className='slideshow-left-btn' variant='primary' onClick={changeCurrentIndexLeft}>LEFT</Button>
             </div>
@@ -172,8 +211,27 @@ const SlideShowView = () => {
             <div className='slideshow-right'>
                 <Button className='slideshow-exit-btn' variant='primary' onClick={exitSlideShow}>EXIT</Button>
                 <Button className='slideshow-right-btn' variant='primary' onClick={changeCurrentIndexRight}>RIGHT</Button>
-                <Button className='slideshow-chat-btn' variant='primary' >CHAT</Button>
+                <Button className='slideshow-chat-btn' variant='primary' onClick={chatting}>CHAT</Button>
             </div>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add A ChatBox/ Question</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <label>List question</label>
+                    {arr2}
+                    <label>Your question/Chat</label>
+                    <input placeholder='Your question/Chat' onChange={(e) => setChatquestion(e.target.value)} />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button variant="primary" onClick={postChatquestion}>
+                        OK
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 }
