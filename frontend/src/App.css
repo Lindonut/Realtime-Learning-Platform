@@ -68,6 +68,7 @@
   height: 200px;
 }
 
+
 .group-title {
   font-size: 20px;
   text-transform: uppercase;
@@ -119,6 +120,11 @@
   color: white !important;
 }
 
+.option-btn {
+  text-align: center;
+  color: black;
+}
+
 a {
   text-decoration: none;
   color: white;
@@ -160,19 +166,20 @@ a {
   text-decoration: none;
 }
 
-.header-member {
+.header-page {
   justify-content: space-between;
   display: flex;
   height: 60px;
+  align-items: center;
 }
 
-.member-title {
+.page-title {
   margin: 20px 0 10px 70px;
   font-size: 17pt;
   text-transform: uppercase;
 }
 
-.add-member-btn {
+.add-btn {
   margin: 10px 70px 10px 0px;
   font-size: 20pt;
   text-transform: uppercase;
@@ -180,6 +187,9 @@ a {
 
 .description {
   margin-left: 70px;
+  margin-top: 20px;
+  align-items: flex-start;
+  justify-content:flex-start;
 }
 
 .in-group-btn {

@@ -56,27 +56,35 @@ const Dashboard = () => {
             handleCloseCreate()
         })
     }
-    const link = groupInvitation.split('/');
-    const length = link.length;
-    const groupID = link[length - 2];
-    const code = link[length - 1];
+    let link = groupInvitation.split('/');
+    let length = link.length;
+    let groupID = link[length - 2];
+    let code = link[length - 1];
     const joinGroup = async() => {
         if (localStorage.token) {
 			setAccessToken(localStorage.token)
 		}
-        try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/group/invitation/${groupID}/${code}`)
-            if(res.data.success)
-            {
-                toast.success(res.data.message); 
-            }
-            else  
-                toast.warning(res.data.message)
-        } catch (error) {
-            toast.error(error.message);
+        if(code === undefined || groupID === undefined || length < 6)
+        {
+            toast.warning("The link is not right. Please check again.");
         }
-        navigate('/')
-        getAllData()
+        else
+        {
+            try {
+                const res = await axios.post(`${process.env.REACT_APP_API_URL}/group/invitation/${groupID}/${code}`)
+                if(res.data.success)
+                {
+                    toast.success(res.data.message); 
+                }
+                else if (!res.data.success)
+                    toast.warning(res.data.message)
+            } catch (error) {
+                toast.error("Can not join right now. Please check the link and try again later.");
+                console.log(error);
+            }
+        }
+        navigate('/');
+        getAllData();
         handleCloseJoin();
     }
 
@@ -87,9 +95,9 @@ const Dashboard = () => {
         return (
             <div className='group-item' key={group._id}>
                 <div className='group-title'>
-                    <Link to={`/infogroup/${group._id}`}>{group.name}</Link>
+                    <Link to={`/infogroup/${group._id}`} style={{textDecoration:"none"}}>{group.name}</Link>
                 </div>
-                <div className='group-description'>{group.description}</div>
+                <div className='group-description' style={{whiteSpace: 'pre-line'}}>{group.description}</div>
             </div>
         )
     })
@@ -113,7 +121,7 @@ const Dashboard = () => {
             </div>
             <Modal show={showCreate} onHide={handleCloseCreate}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Create a new Group</Modal.Title>
+                    <Modal.Title>Create A New Group</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <label>Group Name</label>

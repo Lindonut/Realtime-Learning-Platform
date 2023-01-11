@@ -7,10 +7,11 @@ import {authContext} from '../../contexts/authContext'
 import JoinCode from '../../components/JoinCode/index'
 import axios from 'axios'
 import GoogleLoginButton from '../../components/Buttons/GoogleLogin';
+import Spinner from 'react-bootstrap/Spinner'
 
 function Login() {
-    const {authState: { isAuthenticated }} = useContext(authContext)
     const {loginUser} = useContext(authContext)
+    const { authState: {authLoading, isAuthenticated } } = useContext(authContext)
     const { register: login, handleSubmit, formState: {errors} } 
     = useForm({
         mode: "onTouched", 
@@ -31,8 +32,16 @@ function Login() {
             toast.error(error.message);
         }
     };
-
-    if (isAuthenticated) return <Navigate to='/' />
+    
+    if(authLoading)
+    {
+        return (
+			<div className='d-flex justify-content-center mt-2'>
+				<Spinner animation='border' variant='info' />
+			</div>
+		)
+    }
+    else if (isAuthenticated) return <Navigate to='/' />
 
     return (
         <div>

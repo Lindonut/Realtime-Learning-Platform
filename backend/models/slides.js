@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
 const slideSchema = new Schema ({
-    presentations: {
+    presentation: {
         type: Schema.Types.ObjectId,
     },
     type: {

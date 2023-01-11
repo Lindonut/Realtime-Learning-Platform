@@ -14,8 +14,7 @@ const Header = () => {
     const { logoutUser } = useContext(authContext)
     const handleClick = async () => {
         await logoutUser();
-        
-        console.log('Hello world');
+        <Navigate to='/login'/>
     }
     return (
         <div className='header'>

@@ -11,6 +11,7 @@ export const authContext = createContext()
 const AuthContextProvider = ({children}) => {
 
     const [authState, dispatch] = useReducer(authReducer, {
+        authLoading: true,
 		isAuthenticated: false,
 		user: null
 	})
@@ -121,7 +122,7 @@ const AuthContextProvider = ({children}) => {
     }
 
 
-    const authContextData = {loginUser, registerUser, logoutUser, authState, verifyEmail, registerState}
+    const authContextData = {loginUser, registerUser, logoutUser, authState, verifyEmail, registerState, loadUser}
 
     return (
         <authContext.Provider value={authContextData}>
