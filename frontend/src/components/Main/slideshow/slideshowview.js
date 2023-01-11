@@ -74,7 +74,7 @@ const SlideShowView = () => {
                 getAllData()
             }
             )
-            .catch(err => console.log(err)) 
+            .catch(err => console.log(err))
     }
     const [state, setState] = useState({
         options: {
@@ -103,26 +103,26 @@ const SlideShowView = () => {
                         </div>
                         <div className='slideshowview-multiple-choice-option-full'>
                             <div className='slideshowview-multiple-choice-option-item'>
-                                <label>
-                                    <input type="radio" name="a" value="0" onClick={(e) => setSelect(e.target.value)} />
+                                <input className='abc' type="radio" name="a" value="0" onClick={(e) => setSelect(e.target.value)} />
+                                <label className='abcd'>
                                     {slide.choices[0]}
                                 </label>
                             </div>
                             <div className='slideshowview-multiple-choice-option-item'>
-                                <label>
-                                    <input type="radio" name="a" value="1" onClick={(e) => setSelect(e.target.value)} />
+                                    <input  className = "abc" type="radio" name="a" value="1" onClick={(e) => setSelect(e.target.value)} />
+                                <label className='abcd'>
                                     {slide.choices[1]}
                                 </label>
                             </div>
                             <div className='slideshowview-multiple-choice-option-item'>
-                                <label>
-                                    <input type="radio" name="a" value="2" onClick={(e) => setSelect(e.target.value)} />
+                                    <input  className = "abc" type="radio" name="a" value="2" onClick={(e) => setSelect(e.target.value)} />
+                                <label className='abcd'>
                                     {slide.choices[2]}
                                 </label>
                             </div>
                             <div className='slideshowview-multiple-choice-option-item'>
-                                <label>
-                                    <input type="radio" name="a" value="3" onClick={(e) => setSelect(e.target.value)} />
+                                    <input  className = "abc" type="radio" name="a" value="3" onClick={(e) => setSelect(e.target.value)} />
+                                <label className='abcd'>
                                     {slide.choices[3]}
                                 </label>
                             </div>
@@ -172,6 +172,7 @@ const SlideShowView = () => {
             <div className='slideshow-right'>
                 <Button className='slideshow-exit-btn' variant='primary' onClick={exitSlideShow}>EXIT</Button>
                 <Button className='slideshow-right-btn' variant='primary' onClick={changeCurrentIndexRight}>RIGHT</Button>
+                <Button className='slideshow-chat-btn' variant='primary' >CHAT</Button>
             </div>
         </div>
     );
