@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import '../../../App.css'
 import Button from 'react-bootstrap/Button';
 import { useContext } from 'react'
-import { authContext } from '../../../contexts/authContext'
+import setAccessToken from '../../../utils/setAccessToken'
+import { authContext } from '../../../contexts/authContext';
 import axios from 'axios'
 import Modal from 'react-bootstrap/Modal';
 import { useParams } from 'react-router-dom'
@@ -14,6 +15,9 @@ const Presentation = () => {
     const { authState: { isAuthenticated, user } } = useContext(authContext)
     let { id } = useParams();
     const getAllData = () => {
+        if (localStorage.token) {
+			setAccessToken(localStorage.token)
+		}
         axios.get(`${process.env.REACT_APP_API_URL}/presentation`)
             .then(res => {
                 setPresentation(res.data)
@@ -64,6 +68,7 @@ const Presentation = () => {
         setShowRename(false);
     }
     const renamePresentation = () => {
+        
         axios.patch(`${process.env.REACT_APP_API_URL}/presentation/${presentations[currentIndex]._id}/update`, 
             {
                 name: presentationName
@@ -76,6 +81,9 @@ const Presentation = () => {
             }
             )
             .catch(err => console.log(err))
+    }
+    const handleShowCollab = () => {
+        navigate(`/presentation/${presentations[currentIndex]._id}/collab`)
     }
     useEffect(() => {
         getAllData()
@@ -116,6 +124,9 @@ const Presentation = () => {
                     </span>
                     <span className='create-group-btn'>
                         <Button variant='primary' onClick={handleShowRename}>Rename</Button>
+                    </span>
+                    <span className='create-group-btn'>
+                    <Button variant='primary' onClick={handleShowCollab}>Collaboration</Button>
                     </span>
                 </Navbar.Collapse>
             </Navbar>

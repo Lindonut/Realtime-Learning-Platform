@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
 import Navbar from 'react-bootstrap/Navbar';
 import axios from 'axios'
+import { toast } from "react-toastify";
 
 const Slide = () => {
     const orange = { background: 'orange' };
@@ -12,9 +13,19 @@ const Slide = () => {
     let { id, idpp } = useParams();
     const [slides, setSlide] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
-
     const navigate = useNavigate();
+    const [presentationName, setPresentationName] = useState();
+    const [url, setUrl] = useState();
 
+    const getInfoPP = async() => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/presentation/${idpp}`);
+            setPresentationName(res.data.name);
+            setUrl(res.data.url);
+        } catch (error) {
+            console.log(error);
+        }
+    }
     const getAllData = () => {
         axios.get(`${process.env.REACT_APP_API_URL}/slide/${idpp}`)
             .then(res => {
@@ -127,15 +138,18 @@ const Slide = () => {
         navigate(`/presentation/${id}/${idpp}/edit`);
     }
     const slideShow = () => {
-        navigate(`/presentation/${id}/${idpp}/slideshowview`);
+        navigate(`/presentation/${id}/${idpp}/slideshow`);
     }
-    const shareShow = () => {
-        alert("Fighting!")
-    }
+    const handleShare = () => {
+        navigator?.clipboard?.writeText(url);
+          toast.success('Copied to clipboard.');
+    };
 
     useEffect(() => {
-        getAllData()
+        getAllData();
+        getInfoPP();
     }, []);
+    
     const arr = slides.map((slide, index) => {
         let classNameX = "slide-item";
 
@@ -170,7 +184,7 @@ const Slide = () => {
                     <h4>{index + 1}</h4>
                     <div className='slide-preview'>
                         <div className='slide-heading-heading'>
-                            <div>{slide.heading}</div>
+                            <d>{slide.heading}</d>
                         </div>
                         <div className='slide-heading-subheading'>
                             <div>{slide.paragraph}</div>
@@ -204,7 +218,7 @@ const Slide = () => {
                     <div className='slide-main' key={slide.id}>
                         <div className='slide-fullview'>
                             <div className='slide-multiple-choice-question-full'>
-                                <div>{slide.heading}</div>
+                                <h1>{slide.heading}</h1>
                             </div>
                             <div className='slide-multiple-choice-option-full'>
                                 <div className='slide-multiple-choice-option-item-full'>{slide.choices[0]}</div>
@@ -221,10 +235,10 @@ const Slide = () => {
                     <div className='slide-main' key={slide.id}>
                         <div className='slide-fullview'>
                             <div className='slide-heading-heading-full'>
-                                <div>{slide.heading}</div>
+                                <h1>{slide.heading}</h1>
                             </div>
                             <div className='slide-heading-subheading-full'>
-                                <div>{slide.paragraph}</div>
+                                <h3>{slide.paragraph}</h3>
                             </div>
                         </div>
                     </div>
@@ -235,10 +249,10 @@ const Slide = () => {
                     <div className='slide-main' key={slide.id}>
                         <div className='slide-fullview'>
                             <div className='slide-paragraph-heading-full'>
-                                <div>{slide.heading}</div>
+                                <h1>{slide.heading}</h1>
                             </div>
                             <div className='slide-paragraph-paragraph-full'>
-                                <div>{slide.paragraph}</div>
+                                <p>{slide.paragraph}</p>
                             </div>
                         </div>
                     </div>
@@ -308,28 +322,30 @@ const Slide = () => {
             }
         }
     })
+    const name = presentationName;
+    console.log(name);
     return (
         <>
             <Navbar bg="light" variant="light" className='header-dashboard'>
-                <span className="dashboard-title">Presentation: {idpp}</span>
+                <span className="pp-name"> {name}</span>
                 <Navbar.Collapse className="justify-content-end border-info">
                     <span className='edit-slide-btn'>
                         <Button variant="primary" onClick={addSlide} >
-                            Create
+                            Add New Slide
                         </Button>
                     </span>
                     <span className='edit-slide-btn'>
-                        <Button variant="primary" onClick={deleteSlide} >
-                            Delete
+                        <Button variant="btn btn-danger" onClick={deleteSlide} >
+                            Delete Slide
                         </Button>
                     </span>
                     <span className='edit-slide-btn'>
                         <Button variant="primary" onClick={slideShow} >
-                            Show
+                            Slideshow
                         </Button>
                     </span>
                     <span className='edit-slide-btn'>
-                        <Button variant="primary" onClick={shareShow} >
+                        <Button variant="primary" onClick={handleShare} >
                             Share
                         </Button>
                     </span>
@@ -343,8 +359,6 @@ const Slide = () => {
                 {arr3}
             </div>
         </>
-
     )
-
 }
 export default Slide;

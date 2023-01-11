@@ -135,6 +135,12 @@ a {
   width: auto;
 }
 
+.pp-name {
+  margin: 10px 0px 0px 50px;
+  font-size: 15pt;
+  text-transform: uppercase;
+}
+
 .dashboard-title {
   margin: 10px 0px 0px 50px;
   font-size: 20pt;
@@ -478,7 +484,11 @@ a {
   width: 90%;
   background-color: white;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 80vh;
+
 }
 
 .slideshow-right {
@@ -501,6 +511,7 @@ a {
   position: absolute;
 }
 
+/* 
 .slideshow-right-btn {
   align-content: center;
   position: relative;
@@ -509,6 +520,20 @@ a {
 .slideshow-left-btn {
   align-content: center;
   align-self: center;
+} */
+
+.slideshow-exit{
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+
 }
 
 .slideshow-fullview {
@@ -577,4 +602,8 @@ a {
   /* padding: 0 !important; */
   /* padding: 0 !important; */
   
+}
+
+.guest-nav {
+  color: white !important;
 }

@@ -8,7 +8,9 @@ import Chart from "react-apexcharts";
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
+import {BsArrowLeftCircle, BsArrowRightCircle} from 'react-icons/bs'
 import Modal from 'react-bootstrap/Modal';
+import { toast } from "react-toastify"
 const SlideShowView = () => {
     let { id, idpp } = useParams();
     const [slides, setSlide] = useState([]);
@@ -100,8 +102,9 @@ const SlideShowView = () => {
             result: currentresult
         })
             .then(res => {
-                navigate(`/presentation/${id}/${idpp}/slideshowview`);
-                getAllData()
+                // navigate(`/presentation/${id}/${idpp}/slideshowview`);
+                // getAllData()
+                toast.success("Submitted.");
             }
             )
             .catch(err => console.log(err))
@@ -201,17 +204,16 @@ const SlideShowView = () => {
         <div className='slideshow-full'>
 
             <div className='slideshow-left'>
-                <Button className='slideshow-left-btn' variant='primary' onClick={changeCurrentIndexLeft}>LEFT</Button>
+                <Button variant='light' onClick={changeCurrentIndexLeft}><BsArrowLeftCircle/></Button>
             </div>
-
             <div className='slideshow-center'>
                 {arr1}
             </div>
 
             <div className='slideshow-right'>
-                <Button className='slideshow-exit-btn' variant='primary' onClick={exitSlideShow}>EXIT</Button>
-                <Button className='slideshow-right-btn' variant='primary' onClick={changeCurrentIndexRight}>RIGHT</Button>
-                <Button className='slideshow-chat-btn' variant='primary' onClick={chatting}>CHAT</Button>
+                <Button className='slideshow-exit-btn' variant='light' onClick={exitSlideShow}>EXIT</Button>
+                <Button className='slideshow-right-btn' variant='light' onClick={changeCurrentIndexRight}><BsArrowRightCircle/></Button>
+                <Button className='slideshow-chat-btn' variant='light' onClick={chatting}>CHAT</Button>
             </div>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

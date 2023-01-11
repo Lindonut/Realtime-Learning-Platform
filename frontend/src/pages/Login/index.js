@@ -45,7 +45,6 @@ function Login() {
 
     return (
         <div>
-            <JoinCode/>
             <div className="container">
                 <div className="containerForm">
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -64,7 +63,7 @@ function Login() {
                         <input type="submit" value="Login"/>
                     </form>
                     <p className="center">Or continue with</p>
-                    <GoogleLoginButton/>
+                    <div className="center"><GoogleLoginButton/></div>
                 </div>
             </div>
         </div>

@@ -41,7 +41,6 @@ function Register() {
 
   return (
     <div>
-        <JoinCode />
         <br />
         <br />
         <div className="container">
@@ -64,8 +63,8 @@ function Register() {
                 </div>
                 <input type="submit" value="Register"/>
                 </form>
-            <p className="center">May also register with</p>
-            <GoogleLoginButton/>
+                <p className="center">May also register with</p>
+                <div className="center"><GoogleLoginButton/></div>
             </div>
         </div>
     </div>

@@ -24,13 +24,13 @@ const Header = () => {
                         <a href='/' className='title-brand'>REALTIME LEARNING PLATFORM</a>
                     </div>
                 </Navbar.Brand>
-                <div className='center-code-form'>
+                {/* <div className='center-code-form'>
                     <Form className="code-box">
                             <p className='code-text'>Want to join a presentation?&nbsp;&nbsp;&nbsp;</p>
                             <input placeholder='Enter the code here'/>&nbsp;&nbsp;&nbsp;
                         <Button variant="btn btn-primary">Join</Button>
                     </Form> 
-                </div>     
+                </div>      */}
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end border-info">
                     <NavDropdown title={user.name} id="basic-nav-dropdown" className='border-name' align="end">
                         <NavDropdown.Item>

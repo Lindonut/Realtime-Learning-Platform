@@ -306,18 +306,20 @@ exports.joinGroup = async(req, res) => {
     const decoded = jwt.verify(token, process.env.VERIFY_TOKEN_SECRET)
 	let email = decoded.email
     const mem = await users.findOne({ email: email});
-    const list = await groupmembers.find({groupID: groupID})
-    const check = list.filter(x => x.member == mem._id)
-    if(check.length > 0)
+    const list = await groupmembers.find({groupID: groupID, member: mem._id});
+    if(list.length > 0)
     {
         return res.json({ success: true,  message: "You already join this group."})
     }
-    try {
-		const newMem = new groupmembers({groupID: groupID,member: mem._id, role: 'Member'})
-        await newMem.save();
-		res.json({ success: true,  message: "Now you have joined this group."})
-	} catch (error) {
-		console.log(error)
-		res.status(500).json({ success: false, message: "Can't join." })
-	}
+    else{
+        try {
+            const newMem = new groupmembers({groupID: groupID,member: mem._id, role: 'Member'})
+            await newMem.save();
+            return res.json({ success: true,  message: "Now you have joined this group."})
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ success: false, message: "Can't join." })
+        }
+    }
+
 }

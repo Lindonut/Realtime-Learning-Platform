@@ -10,6 +10,8 @@ import NewPassword from './pages/ForgotPassword/enternewpassword'
 import VerifySuccess from './pages/Verify/verifySuccess'
 import Presentation from './components/Main/presentation/presentation';
 import Slide from './components/Main/slide/slide';
+import Collab from './components/Main/presentation/collab';
+import ConfirmCollab from './components/Main/presentation/confirmcollab';
 import Dashboard from './components/Main/dashboard/dashboard'
 import Infogroup from './components/Main/infogroup/infogroup'
 import Description from './components/Main/infogroup/description/description'
@@ -21,6 +23,7 @@ import { authContext } from '../src/contexts/authContext';
 import SlideShow from './components/Main/slideshow/slideshow';
 import Spinner from 'react-bootstrap/Spinner'
 import SlideShowView from './components/Main/slideshow/slideshowview';
+import GuestSlideshow from './pages/Guest/joinslideshow';
 
 function App() {
   const { authState: { authLoading, isAuthenticated, user } } = useContext(authContext)
@@ -53,7 +56,9 @@ function App() {
                 </Route>
               <Route path="/presentation/:id/:idpp/slideshow" element={<SlideShow />} />
               <Route path="/:groupID/invitation/:token" element={<ConfirmJoinGroup />} />
-              <Route path="/presentation/:id/:idpp/slideshowview" element={<SlideShowView />} />
+              <Route path="/presentation/:id/:idpp/slideshow/:code" element={<SlideShowView />} />
+              <Route path="/presentation/:idpp/collab" element={<Collab />} />
+              <Route path="/presentation/:idpp/collaboration/:token" element={<ConfirmCollab />} />
               
             </Route>
             <Route path="*" element={<Navigate to='/' />} />
@@ -66,6 +71,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/fogotPassword' element={<RecoverMail />} />
             <Route path='/resetPassword/:token' element={<NewPassword />} />
+            <Route path="/presentation/:id/:idpp/slideshow/:code" element={<GuestSlideshow />} />
             <Route path="*" element={<Navigate to='/login' />} />
           </>
         )}

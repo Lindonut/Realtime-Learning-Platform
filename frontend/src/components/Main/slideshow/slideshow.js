@@ -8,6 +8,7 @@ import Chart from "react-apexcharts";
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
+import {BsArrowLeftCircle, BsArrowRightCircle} from 'react-icons/bs'
 import Modal from 'react-bootstrap/Modal';
 const SlideShow = () => {
     let { id, idpp } = useParams();
@@ -81,7 +82,7 @@ const SlideShow = () => {
     }, []);
 
     const exitSlideShow = () => {
-        navigate(`/presentation/${id}`);
+        navigate(`/presentation/${id}/${idpp}/edit`);
     }
     const changeCurrentIndexLeft = () => {
         if (currentIndex > 0) {
@@ -196,7 +197,7 @@ const SlideShow = () => {
     return (
         <div className='slideshow-full'>
             <div className='slideshow-left'>
-                <Button className='slideshow-left-btn' variant='primary' onClick={changeCurrentIndexLeft}>LEFT</Button>
+                <Button className='slideshow-left-btn' variant='light' onClick={changeCurrentIndexLeft}><BsArrowLeftCircle/></Button>
             </div>
 
             <div className='slideshow-center'>
@@ -204,9 +205,9 @@ const SlideShow = () => {
             </div>
 
             <div className='slideshow-right'>
-                <Button className='slideshow-exit-btn' variant='primary' onClick={exitSlideShow}>EXIT</Button>
-                <Button className='slideshow-right-btn' variant='primary' onClick={changeCurrentIndexRight}>RIGHT</Button>
-                <Button className='slideshow-chat-btn' variant='primary' onClick={chatting}>CHAT</Button>
+                <Button className='slideshow-exit-btn' variant='light' onClick={exitSlideShow}>EXIT</Button>
+                <Button className='slideshow-right-btn' variant='light' onClick={changeCurrentIndexRight}><BsArrowRightCircle/></Button>
+                <Button className='slideshow-chat-btn' variant='light' onClick={chatting}>CHAT</Button>
             </div>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

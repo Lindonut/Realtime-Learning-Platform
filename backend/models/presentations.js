@@ -10,9 +10,6 @@ const presentationSchema = new Schema ({
     owner: {
         type: Schema.Types.ObjectId,
     },
-    link: {
-        type: String,
-    },
     code: {
         type: String,
     },
@@ -22,15 +19,17 @@ const presentationSchema = new Schema ({
         default: 'Public'
     },
     group: {
-        type: [Schema.Types.ObjectId]
+        type: [Schema.Types.ObjectId],
+        sparse: true
     },
     slide: 
     {
         type: [String]
     },
-    colab:
+    collab:
     {
-        type: Schema.Types.ObjectId
+        type: [Schema.Types.ObjectId],
+        sparse: true
     }
 })
 

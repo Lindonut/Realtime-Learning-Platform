@@ -56,7 +56,7 @@ function GoogleLoginButton() {
 
             google.accounts.id.renderButton(ref.current, {
                 theme: 'outline',
-                size: 'large'
+                size: 'large',
             });
         })
         .catch(console.error)
