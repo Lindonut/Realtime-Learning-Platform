@@ -13,61 +13,73 @@ import Navbar from 'react-bootstrap/Navbar';
 const Presentation = () => {
     const { authState: { isAuthenticated, user } } = useContext(authContext)
     let { id } = useParams();
-    useEffect(() => {
-        const lists = []
-        lists.push({ id: 1, presentationName: "Presentation-1" });
-        lists.push({ id: 2, presentationName: "Presentation-2" });
-        lists.push({ id: 3, presentationName: "Presentation-3" });
-        lists.push({ id: 4, presentationName: "Presentation-4" });
-        lists.push({ id: 5, presentationName: "Presentation-5" });
-        lists.push({ id: 6, presentationName: "Presentation-6" });
-        lists.push({ id: 7, presentationName: "Presentation-7" });
-        setPresentation(lists)
-    }, [])
+    const getAllData = () => {
+        axios.get(`${process.env.REACT_APP_API_URL}/presentation`)
+            .then(res => {
+                setPresentation(res.data)
+            }
+            )
+            .catch(err => console.log(err))
+    }
     const [presentations, setPresentation] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const [show, setShow] = useState(false);
-    const [showShare, setShowShare] = useState(false);
+    const [showRename, setShowRename] = useState(false);
 
-    const [typeShare, setTypeShare] = useState("view");
     const [presentationName, setPresentationName] = useState();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const navigate = useNavigate();
     const postPresentation = () => {
-        let number = presentations.length + 1;
-        presentations.push({ id: number, presentationName: presentationName })
-        navigate(`/presentation/${id}`);
-        handleClose();
+        axios.post(`${process.env.REACT_APP_API_URL}/presentation/add`, {
+            name: presentationName,
+            owner: id
+        }).then((res) => {
+            navigate(`/presentation/${id}`)
+            getAllData()
+            handleClose()
+        })
     }
     const deletePresentation = () => {
-        alert("Do you want to delete presentation " + (currentIndex + 1) + "?");
-        presentations.splice(currentIndex, 1);
-        reMarkId();
-        setCurrentIndex(currentIndex - 1);
-        navigate(`/presentation/${id}`);
+        axios.delete(`${process.env.REACT_APP_API_URL}/presentation/${presentations[currentIndex]._id}/delete`)
+            .then(res => {
+                navigate(`/presentation/${id}`)
+                getAllData()
+            }
+            )
+            .catch(err => console.log(err))
     }
     const editPresentation = () => {
-        navigate(`/presentation/${id}/${presentations[currentIndex].presentationName}/edit`)
-    }
-    const sharePresentation = () => {
+        console.log(id);
+        console.log(presentations[currentIndex]._id);
+        navigate(`/presentation/${id}/${presentations[currentIndex]._id}/edit`)
 
-        setShowShare(true);
     }
-    const handleCloseShare = () => {
-        setShowShare(false);
+    const handleShowRename = () => {
+        setShowRename(true);
     }
-    const reMarkId = () => {
-        for (var i = 0; i < presentations.length; i++) {
-            presentations[i].id = i + 1;
-        }
+    const handleCloseRename = () => {
+        setShowRename(false);
     }
-    const demoChange =(e) => {
-        setTypeShare(e.target.value);
-        console.log("/presentation/"+id+"/"+ presentations[currentIndex].presentationName+"/"+typeShare);
+    const renamePresentation = () => {
+        axios.patch(`${process.env.REACT_APP_API_URL}/presentation/${presentations[currentIndex]._id}/update`, 
+            {
+                name: presentationName
+            }
+        )
+            .then(res => {
+                navigate(`/presentation/${id}`)
+                getAllData()
+                handleCloseRename();
+            }
+            )
+            .catch(err => console.log(err))
     }
+    useEffect(() => {
+        getAllData()
+    }, []);
     const arr = presentations.map((presentation, index) => {
         let classNameX = "presentation-item";
 
@@ -81,8 +93,8 @@ const Presentation = () => {
                     onClick={() => setCurrentIndex(index)}
                     className={classNameX}
                 >
-                    <th>{presentation.id}</th>
-                    <th>{presentation.presentationName}</th>
+                    <th>{index+1}</th>
+                    <th>{presentation.name}</th>
                 </tr>
             </>
 
@@ -103,7 +115,7 @@ const Presentation = () => {
                         <Button variant='primary' onClick={editPresentation}>Edit</Button>
                     </span>
                     <span className='create-group-btn'>
-                        <Button variant='primary' onClick={sharePresentation}>Share</Button>
+                        <Button variant='primary' onClick={handleShowRename}>Rename</Button>
                     </span>
                 </Navbar.Collapse>
             </Navbar>
@@ -138,23 +150,20 @@ const Presentation = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <Modal show={showShare} onHide={handleCloseShare}>
+            <Modal show={showRename} onHide={handleCloseRename}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Share Presentation</Modal.Title>
+                    <Modal.Title>Rename Presentation</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <label>Type Name</label>
-                    <select className='select' value={typeShare} onChange={demoChange}>
-                        <option>view</option>
-                        <option>edit</option>
-                        <option>group</option>
-                    </select>
-                    <label>Link</label>
-                    <input value={typeShare}/>
+                    <label>New Presentation Name</label>
+                    <input placeholder='Presentation Name' onChange={(e) => setPresentationName(e.target.value)} />
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={handleCloseShare}>
+                    <Button variant="secondary" onClick={handleCloseRename}>
                         Cancel
+                    </Button>
+                    <Button variant="primary" onClick={renamePresentation}>
+                        OK
                     </Button>
                 </Modal.Footer>
             </Modal>

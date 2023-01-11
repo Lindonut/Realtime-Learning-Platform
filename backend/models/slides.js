@@ -16,8 +16,7 @@ const slideSchema = new Schema ({
         type: String,
     },
     choices: {
-        type: Map,
-        of: Int32Array
+        type: [String]
     },
     layout: {
         type: String,
@@ -25,6 +24,9 @@ const slideSchema = new Schema ({
     },
     image: {
         type: String,
+    },
+    result: {
+        type: [String]
     }
 })
 

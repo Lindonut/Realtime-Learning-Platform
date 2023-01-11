@@ -24,8 +24,10 @@ const userSchema = new Schema ({
         default: 'Local',
     },
     refreshToken: {
-        type: String,
-        sparse: true
+        type: String
+    },
+    type: {
+        type: String
     }
 })
 

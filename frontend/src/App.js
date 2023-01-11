@@ -20,6 +20,7 @@ import { useEffect, useContext } from 'react';
 import { authContext } from '../src/contexts/authContext';
 import SlideShow from './components/Main/slideshow/slideshow';
 import Spinner from 'react-bootstrap/Spinner'
+import SlideShowView from './components/Main/slideshow/slideshowview';
 
 function App() {
   const { authState: { authLoading, isAuthenticated, user } } = useContext(authContext)
@@ -52,6 +53,8 @@ function App() {
                 </Route>
               <Route path="/presentation/:id/:idpp/slideshow" element={<SlideShow />} />
               <Route path="/:groupID/invitation/:token" element={<ConfirmJoinGroup />} />
+              <Route path="/presentation/:id/:idpp/slideshowview" element={<SlideShowView />} />
+              
             </Route>
             <Route path="*" element={<Navigate to='/' />} />
           </>

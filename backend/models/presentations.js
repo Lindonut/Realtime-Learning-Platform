@@ -12,13 +12,9 @@ const presentationSchema = new Schema ({
     },
     link: {
         type: String,
-        require: true,
-        unique: true
     },
     code: {
         type: String,
-        require: true,
-        unique: true
     },
     type: {
         type: String,
@@ -31,6 +27,10 @@ const presentationSchema = new Schema ({
     slide: 
     {
         type: [String]
+    },
+    colab:
+    {
+        type: Schema.Types.ObjectId
     }
 })
 

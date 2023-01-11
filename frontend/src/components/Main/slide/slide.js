@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
 import Navbar from 'react-bootstrap/Navbar';
+import axios from 'axios'
 
 const Slide = () => {
     const orange = { background: 'orange' };
@@ -14,84 +15,127 @@ const Slide = () => {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const lists = []
-        lists.push({
-            id: 1, type: "Multiple Choice", heading: "This is Review1", paragraph: "",
-            choice: [1, 2, 3, 4], layout: "Bars", image: ""
-        });
-        lists.push({
-            id: 2, type: "Heading", heading: "This is Review2", paragraph: "Hello2",
-            choice: [], layout: "Bars", image: ""
-        });
-        lists.push({
-            id: 3, type: "Paragraph", heading: "This is Review3", paragraph: "World3",
-            choice: [], layout: "Bars", image: ""
-        });
-        lists.push({
-            id: 4, type: "Multiple Choice", heading: "This is Review4", paragraph: "",
-            choice: [7, 8, 9, 10], layout: "Bars", image: ""
-        });
-        lists.push({
-            id: 5, type: "Heading", heading: "This is Review5", paragraph: "Hello5",
-            choice: [], layout: "Bars", image: ""
-        });
-        lists.push({
-            id: 6, type: "Paragraph", heading: "This is Review6", paragraph: "World6",
-            choice: [], layout: "Bars", image: ""
-        });
-        setSlide(lists)
-    }, [])
+    const getAllData = () => {
+        axios.get(`${process.env.REACT_APP_API_URL}/slide/${idpp}`)
+            .then(res => {
+                setSlide(res.data)
+            }
+            )
+            .catch(err => console.log(err))
+    }
     const changeQuestion = (e) => {
-        slides[currentIndex].heading = e.target.value; navigate(`/presentation/${id}/${idpp}/edit`);
-    }
-    const changeType = (e) => {
-        slides[currentIndex].type = e.target.value; navigate(`/presentation/${id}/${idpp}/edit`);
-    }
-    const changeOption1 = (e) => {
-        slides[currentIndex].choice[0] = e.target.value; navigate(`/presentation/${id}/${idpp}/edit`);
-    }
-    const changeOption2 = (e) => {
-        slides[currentIndex].choice[1] = e.target.value; navigate(`/presentation/${id}/${idpp}/edit`);
-    }
-    const changeOption3 = (e) => {
-        slides[currentIndex].choice[2] = e.target.value; navigate(`/presentation/${id}/${idpp}/edit`);
-    }
-    const changeOption4 = (e) => {
-        slides[currentIndex].choice[3] = e.target.value; navigate(`/presentation/${id}/${idpp}/edit`);
-    }
-    const changeParagraph = (e) => {
-        slides[currentIndex].paragraph = e.target.value; navigate(`/presentation/${id}/${idpp}/edit`);
-    }
-    const reMarkId = () => {
-        for (var i = 0; i < slides.length; i++) {
-            slides[i].id = i + 1;
-        }
-    }
-    const addSlide = () => {
-        let number = slides.length + 1;
-        slides.push({
-            id: number, type: "Multiple Choice", heading: "This is Review1", paragraph: "",
-            choice: [0, 0, 0, 0], layout: "Bars", image: ""
+        axios.patch(`${process.env.REACT_APP_API_URL}/slide/${idpp}/${slides[currentIndex]._id}/update`, {
+            heading: e.target.value
         })
-        navigate(`/presentation/${id}/${idpp}/edit`);
+            .then(res => {
+                navigate(`/presentation/${id}/${idpp}/edit`);
+                getAllData()
+            }
+            )
+            .catch(err => console.log(err))
 
     }
+    const changeType = (e) => {
+        axios.patch(`${process.env.REACT_APP_API_URL}/slide/${idpp}/${slides[currentIndex]._id}/update`, {
+            type: e.target.value
+        })
+            .then(res => {
+                navigate(`/presentation/${id}/${idpp}/edit`);
+                getAllData()
+            }
+            )
+            .catch(err => console.log(err))
+    }
+    const changeOption1 = (e) => {
+        var choiceschange = slides[currentIndex].choices;
+        choiceschange[0] = e.target.value;
+        axios.patch(`${process.env.REACT_APP_API_URL}/slide/${idpp}/${slides[currentIndex]._id}/update`, {
+            choices: choiceschange
+        })
+            .then(res => {
+                navigate(`/presentation/${id}/${idpp}/edit`);
+                getAllData()
+            }
+            )
+            .catch(err => console.log(err))
+    }
+    const changeOption2 = (e) => {
+        var choiceschange = slides[currentIndex].choices;
+        choiceschange[1] = e.target.value;
+        axios.patch(`${process.env.REACT_APP_API_URL}/slide/${idpp}/${slides[currentIndex]._id}/update`, {
+            choices: choiceschange
+        })
+            .then(res => {
+                navigate(`/presentation/${id}/${idpp}/edit`);
+                getAllData()
+            }
+            )
+            .catch(err => console.log(err))
+    }
+    const changeOption3 = (e) => {
+        var choiceschange = slides[currentIndex].choices;
+        choiceschange[2] = e.target.value;
+        axios.patch(`${process.env.REACT_APP_API_URL}/slide/${idpp}/${slides[currentIndex]._id}/update`, {
+            choices: choiceschange
+        })
+            .then(res => {
+                navigate(`/presentation/${id}/${idpp}/edit`);
+                getAllData()
+            }
+            )
+            .catch(err => console.log(err))
+    }
+    const changeOption4 = (e) => {
+        var choiceschange = slides[currentIndex].choices;
+        choiceschange[3] = e.target.value;
+        axios.patch(`${process.env.REACT_APP_API_URL}/slide/${idpp}/${slides[currentIndex]._id}/update`, {
+            choices: choiceschange
+        })
+            .then(res => {
+                navigate(`/presentation/${id}/${idpp}/edit`);
+                getAllData()
+            }
+            )
+            .catch(err => console.log(err))
+    }
+    const changeParagraph = (e) => {
+        axios.patch(`${process.env.REACT_APP_API_URL}/slide/${idpp}/${slides[currentIndex]._id}/update`, {
+            paragraph: e.target.value
+        })
+            .then(res => {
+                navigate(`/presentation/${id}/${idpp}/edit`);
+                getAllData()
+            }
+            )
+            .catch(err => console.log(err))
+    }
+    const addSlide = () => {
+        axios.post(`${process.env.REACT_APP_API_URL}/slide/${idpp}/add`)
+            .then((res) => {
+                navigate(`/presentation/${id}/${idpp}/edit`);
+                getAllData()
+            })
+    }
     const deleteSlide = () => {
-        alert("Do you want to delete slide " + (currentIndex + 1) + "?");
-        slides.splice(currentIndex, 1);
-        reMarkId();
-        if (currentIndex == 0) {
-            setCurrentIndex(0)
-        }
-        else {
-            setCurrentIndex(currentIndex - 1);
-        }
+        axios.delete(`${process.env.REACT_APP_API_URL}/slide/${idpp}/${slides[currentIndex]._id}/delete`)
+            .then(res => {
+                navigate(`/presentation/${id}/${idpp}/edit`);
+                getAllData()
+            }
+            )
+            .catch(err => console.log(err))
         navigate(`/presentation/${id}/${idpp}/edit`);
     }
     const slideShow = () => {
-        navigate(`/presentation/${id}/${idpp}/slideshow`);
+        navigate(`/presentation/${id}/${idpp}/slideshowview`);
     }
+    const shareShow = () => {
+        alert("Fighting!")
+    }
+
+    useEffect(() => {
+        getAllData()
+    }, []);
     const arr = slides.map((slide, index) => {
         let classNameX = "slide-item";
 
@@ -101,17 +145,17 @@ const Slide = () => {
             return (
                 <div className={classNameX}
                     onClick={() => setCurrentIndex(index)}
-                    key={slide.id}>
-                    <h4>{slide.id}</h4>
+                    key={slide._id}>
+                    <h4>{index + 1}</h4>
                     <div className='slide-preview'>
                         <div className='slide-multiple-choice-question'>
                             <div>{slide.heading}</div>
                         </div>
                         <div className='slide-multiple-choice-option'>
-                            <div className='slide-multiple-choice-option-item'>{slide.choice[0]}</div>
-                            <div className='slide-multiple-choice-option-item'>{slide.choice[1]}</div>
-                            <div className='slide-multiple-choice-option-item'>{slide.choice[2]}</div>
-                            <div className='slide-multiple-choice-option-item'>{slide.choice[3]}</div>
+                            <div className='slide-multiple-choice-option-item'>{slide.choices[0]}</div>
+                            <div className='slide-multiple-choice-option-item'>{slide.choices[1]}</div>
+                            <div className='slide-multiple-choice-option-item'>{slide.choices[2]}</div>
+                            <div className='slide-multiple-choice-option-item'>{slide.choices[3]}</div>
                         </div>
 
                     </div>
@@ -123,7 +167,7 @@ const Slide = () => {
                 <div className={classNameX}
                     onClick={() => setCurrentIndex(index)}
                     key={slide.id}>
-                    <h4>{slide.id}</h4>
+                    <h4>{index + 1}</h4>
                     <div className='slide-preview'>
                         <div className='slide-heading-heading'>
                             <div>{slide.heading}</div>
@@ -140,7 +184,7 @@ const Slide = () => {
                 <div className={classNameX}
                     onClick={() => setCurrentIndex(index)}
                     key={slide.id}>
-                    <h4>{slide.id}</h4>
+                    <h4>{index + 1}</h4>
                     <div className='slide-preview'>
                         <div className='slide-heading-heading'>
                             <div>{slide.heading}</div>
@@ -163,10 +207,10 @@ const Slide = () => {
                                 <div>{slide.heading}</div>
                             </div>
                             <div className='slide-multiple-choice-option-full'>
-                                <div className='slide-multiple-choice-option-item-full'>{slide.choice[0]}</div>
-                                <div className='slide-multiple-choice-option-item-full'>{slide.choice[1]}</div>
-                                <div className='slide-multiple-choice-option-item-full'>{slide.choice[2]}</div>
-                                <div className='slide-multiple-choice-option-item-full'>{slide.choice[3]}</div>
+                                <div className='slide-multiple-choice-option-item-full'>{slide.choices[0]}</div>
+                                <div className='slide-multiple-choice-option-item-full'>{slide.choices[1]}</div>
+                                <div className='slide-multiple-choice-option-item-full'>{slide.choices[2]}</div>
+                                <div className='slide-multiple-choice-option-item-full'>{slide.choices[3]}</div>
                             </div>
                         </div>
                     </div>
@@ -217,10 +261,10 @@ const Slide = () => {
                             <div>Your Question</div>
                             <input placeholder={slides[currentIndex].heading} onChange={(e) => changeQuestion(e)} />
                             <div>Your Options</div>
-                            <input placeholder={slides[currentIndex].choice[0]} onChange={(e) => changeOption1(e)} />
-                            <input placeholder={slides[currentIndex].choice[1]} onChange={(e) => changeOption2(e)} />
-                            <input placeholder={slides[currentIndex].choice[2]} onChange={(e) => changeOption3(e)} />
-                            <input placeholder={slides[currentIndex].choice[3]} onChange={(e) => changeOption4(e)} />
+                            <input placeholder={slides[currentIndex].choices[0]} onChange={(e) => changeOption1(e)} />
+                            <input placeholder={slides[currentIndex].choices[1]} onChange={(e) => changeOption2(e)} />
+                            <input placeholder={slides[currentIndex].choices[2]} onChange={(e) => changeOption3(e)} />
+                            <input placeholder={slides[currentIndex].choices[3]} onChange={(e) => changeOption4(e)} />
                         </div>
                     </div>
                 )
@@ -284,7 +328,11 @@ const Slide = () => {
                             Show
                         </Button>
                     </span>
-
+                    <span className='edit-slide-btn'>
+                        <Button variant="primary" onClick={shareShow} >
+                            Share
+                        </Button>
+                    </span>
                 </Navbar.Collapse>
             </Navbar>
             <div className='main-editing-slide'>

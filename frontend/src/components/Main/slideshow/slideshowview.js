@@ -8,40 +8,13 @@ import Chart from "react-apexcharts";
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
-const SlideShow = () => {
+
+const SlideShowView = () => {
     let { id, idpp } = useParams();
     const [slides, setSlide] = useState([]);
+    const [select, setSelect] = useState();
     const [currentIndex, setCurrentIndex] = useState(0);
     const navigate = useNavigate();
-    // useEffect(() => {
-    //     const lists = []
-    //     lists.push({
-    //         id: 1, type: "Multiple Choice", heading: "This is Review1", paragraph: "",
-    //         choice: [1, 2, 3, 4], layout: "Bars", image: "", result: [10, 20, 30, 40]
-    //     });
-    //     lists.push({
-    //         id: 2, type: "Heading", heading: "This is Review2", paragraph: "Hello2",
-    //         choice: [], layout: "Bars", image: "", result: []
-    //     });
-    //     lists.push({
-    //         id: 3, type: "Paragraph", heading: "This is Review3", paragraph: "World3",
-    //         choice: [], layout: "Bars", image: "", result: []
-    //     });
-    //     lists.push({
-    //         id: 4, type: "Multiple Choice", heading: "This is Review4", paragraph: "",
-    //         choice: [7, 8, 9, 10], layout: "Bars", image: "", result: [50, 60, 70, 80]
-    //     });
-    //     lists.push({
-    //         id: 5, type: "Heading", heading: "This is Review5", paragraph: "Hello5",
-    //         choice: [], layout: "Bars", image: "", result: []
-    //     });
-    //     lists.push({
-    //         id: 6, type: "Paragraph", heading: "This is Review6", paragraph: "World6",
-    //         choice: [], layout: "Bars", image: "", result: []
-    //     });
-    //     setSlide(lists)
-    // }, [])
-
 
     const getAllData = () => {
         axios.get(`${process.env.REACT_APP_API_URL}/slide/${idpp}`)
@@ -61,10 +34,9 @@ const SlideShow = () => {
     const changeCurrentIndexLeft = () => {
         if (currentIndex > 0) {
             setCurrentIndex(currentIndex - 1)
-            if(slides[currentIndex-1].type == "Multiple Choice")
-            {
-                state.options.xaxis.categories = slides[currentIndex-1].choices;
-                state.series[0].data = slides[currentIndex-1].result;
+            if (slides[currentIndex - 1].type == "Multiple Choice") {
+                state.options.xaxis.categories = slides[currentIndex - 1].choices;
+                state.series[0].data = slides[currentIndex - 1].result;
             }
         }
         else {
@@ -75,10 +47,9 @@ const SlideShow = () => {
     const changeCurrentIndexRight = () => {
         if (currentIndex < slides.length - 1) {
             setCurrentIndex(currentIndex + 1)
-            if(slides[currentIndex+1].type == "Multiple Choice")
-            {
-                state.options.xaxis.categories = slides[currentIndex+1].choices;
-                state.series[0].data = slides[currentIndex+1].result;
+            if (slides[currentIndex + 1].type == "Multiple Choice") {
+                state.options.xaxis.categories = slides[currentIndex + 1].choices;
+                state.series[0].data = slides[currentIndex + 1].result;
             }
         }
         else {
@@ -89,6 +60,22 @@ const SlideShow = () => {
     const showindex = () => {
         console.log("Current now: " + currentIndex);
     }
+    const changeResult = (e) => {
+        const selectnumber = parseInt(select)
+        var currentresult = slides[currentIndex].result;
+
+        currentresult[selectnumber]++;
+        console.log("done");
+        axios.patch(`${process.env.REACT_APP_API_URL}/slide/${idpp}/${slides[currentIndex]._id}/update`, {
+            result: currentresult
+        })
+            .then(res => {
+                navigate(`/presentation/${id}/${idpp}/slideshowview`);
+                getAllData()
+            }
+            )
+            .catch(err => console.log(err)) 
+    }
     const [state, setState] = useState({
         options: {
             colors: ["#E91E63"],
@@ -96,13 +83,13 @@ const SlideShow = () => {
                 id: "basic-bar",
             },
             xaxis: {
-                categories: [0,0,0,0],
+                categories: [0, 0, 0, 0],
             },
         },
         series: [
             {
                 name: "People Born",
-                data: [0,0,0,0],
+                data: [0, 0, 0, 0],
             },
         ],
     });
@@ -114,16 +101,35 @@ const SlideShow = () => {
                         <div className='slideshow-multiple-choice-question-full'>
                             <div>{slide.heading}</div>
                         </div>
-                        <div className='slideshow-multiple-choice-option-full'>
-                            <Chart
-                                options={state.options}
-                                series={state.series}
-                                type="bar"
-                                width="100%"
-                                height="100%"
-                            />
+                        <div className='slideshowview-multiple-choice-option-full'>
+                            <div className='slideshowview-multiple-choice-option-item'>
+                                <label>
+                                    <input type="radio" name="a" value="0" onClick={(e) => setSelect(e.target.value)} />
+                                    {slide.choices[0]}
+                                </label>
+                            </div>
+                            <div className='slideshowview-multiple-choice-option-item'>
+                                <label>
+                                    <input type="radio" name="a" value="1" onClick={(e) => setSelect(e.target.value)} />
+                                    {slide.choices[1]}
+                                </label>
+                            </div>
+                            <div className='slideshowview-multiple-choice-option-item'>
+                                <label>
+                                    <input type="radio" name="a" value="2" onClick={(e) => setSelect(e.target.value)} />
+                                    {slide.choices[2]}
+                                </label>
+                            </div>
+                            <div className='slideshowview-multiple-choice-option-item'>
+                                <label>
+                                    <input type="radio" name="a" value="3" onClick={(e) => setSelect(e.target.value)} />
+                                    {slide.choices[3]}
+                                </label>
+                            </div>
+                            <div className='slideshowview-multiple-choice-option-submit'>
+                                <Button variant='primary' onClick={changeResult}>SUBMIT</Button>
+                            </div>
                         </div>
-
                     </div>
                 )
             }
@@ -170,4 +176,4 @@ const SlideShow = () => {
         </div>
     );
 }
-export default SlideShow
+export default SlideShowView

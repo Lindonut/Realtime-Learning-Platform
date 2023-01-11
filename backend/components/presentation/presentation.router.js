@@ -4,14 +4,13 @@ const router = express.Router();
 
 const presentationController = require("./presentation.controller");
 
-// router.get('/', presentationController.getAllPresentation)
+router.get('/', presentationController.getAllPresentation)
 
-// router.get('/add', presentationController.addPresentation)
+router.post('/add', presentationController.addPresentation)
 
-// router.get('/:idpp', presentationController.getOnePresentation)
+router.get('/:idpp', presentationController.getOnePresentation)
 
-// router.get('/:idpp/delete', presentationController.delateOnePresentation)
+router.delete('/:idpp/delete', presentationController.delatePresentation)
 
-// router.get('/:idpp/colab', presentationController.addColab)
-
+router.patch('/:idpp/update', presentationController.updatePresentation)
 module.exports = router;
