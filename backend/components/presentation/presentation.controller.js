@@ -23,7 +23,7 @@ exports.addPresentation = async (req, res) => {
         const collab = [];
         const { name, owner } = req.body;
 
-        const newpre = await presentations.create({name, owner, link, code, type, group, slide, collab});
+        const newpre = await presentations.create({name, owner, code, type, group, slide, collab});
         await newpre.save();
         res.status(200).json(newpre);
     } catch (error) {
